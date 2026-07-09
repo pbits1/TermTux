@@ -1,45 +1,41 @@
 ---
-title: "GETTING HELP"
+title: "Getting Help"
 section: 2
 category: 27
-icon: "terminal"
+description: "Use man pages, --help, info, and other help commands."
+icon: "help-circle"
+tags: ['man', 'help', 'info', 'whatis', 'apropos']
 ---
 
-# GETTING HELP
-
+# Getting Help
 
 ```bash
 man command_name
 ```
-    → Open the manual page for any command (press 'q' to quit).
-      Example: man grep
 
-```bash
+→ Open the manual page for any command (press 'q' to quit).
+
+Example: man grep
+
 command_name --help
-```
-    → Quick help/usage for a command.
-      Example: ls --help
+→ Quick help/usage for a command.
 
-```bash
+Example: ls --help
+
 tldr command_name
-```
-    → Simplified, practical examples for a command (community-driven).
-      Install: sudo apt install tldr
-      First run: tldr --update
+→ Simplified, practical examples for a command (community-driven).
 
-```bash
+Install: sudo apt install tldr
+First run: tldr --update
+
 history
-```
-    → Show all commands you've previously typed.
+→ Show all commands you've previously typed.
 
-```bash
+
 history | grep "keyword"
-```
-    → Search your command history.
+→ Search your command history.
 
-```bash
+
 Ctrl+R
-```
-    → Reverse-search your command history (start typing to find).
-
+→ Reverse-search your command history (start typing to find).
 

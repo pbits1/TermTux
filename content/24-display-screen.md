@@ -1,46 +1,44 @@
 ---
-title: "DISPLAY & SCREEN"
+title: "Display & Screen"
 section: 2
 category: 24
-icon: "terminal"
+description: "Manage display resolution, brightness, and screen settings."
+icon: "monitor"
+tags: ['display', 'screen', 'resolution', 'brightness', 'xrandr']
 ---
 
-# DISPLAY & SCREEN
-
+# Display & Screen
 
 ```bash
 xrandr
 ```
-    → List displays and available resolutions.
+
+→ List displays and available resolutions.
+
 
 ```bash
 xrandr --output HDMI-1 --mode 1920x1080
 ```
-    → Set resolution for a specific display.
 
-```bash
+→ Set resolution for a specific display.
+
+
 xdg-open file.pdf
-```
-    → Open any file with its default application (like double-clicking).
+→ Open any file with its default application (like double-clicking).
 
-```bash
+
 xdg-open https://google.com
-```
-    → Open a URL in the default browser.
+→ Open a URL in the default browser.
 
-```bash
+
 gnome-screenshot
-```
-    → Take a screenshot (saved to Pictures).
+→ Take a screenshot (saved to Pictures).
 
-```bash
+
 gnome-screenshot -a
-```
-    → Take a screenshot of a selected area.
+→ Take a screenshot of a selected area.
 
-```bash
+
 xdotool key Print
-```
-    → Simulate pressing the Print Screen key.
-
+→ Simulate pressing the Print Screen key.
 

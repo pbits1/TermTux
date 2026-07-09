@@ -1,35 +1,53 @@
 ---
-title: "NODE.JS & NPM"
+title: "Node.js & NPM"
 section: 4
 category: 50
-icon: "terminal"
+description: "Install Node.js and npm for JavaScript development."
+icon: "code"
+tags: ['nodejs', 'npm', 'javascript', 'nvm', 'developer']
 ---
 
-# NODE.JS & NPM
+# Node.js & NPM
+
+## What is it?
+
+Node.js runs JavaScript outside the browser. npm is its package manager. Needed for web development, React, Next.js, etc.
 
 
-  What is it?
-    Node.js runs JavaScript outside the browser. npm is its package
-    manager. Needed for web development, React, Next.js, etc.
+```bash
+# Install Node.js (recommended: via NodeSource for latest version):
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install nodejs
+```
 
-    # Install Node.js (recommended: via NodeSource for latest version):
-    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-    sudo apt install nodejs
 
-    # Verify installation:
-    node --version
-    npm --version
+```bash
+# Verify installation:
+node --version
+npm --version
+```
 
-    # Install a package globally:
-    sudo npm install -g package_name
 
-    # Initialize a new project:
-    npm init -y
+```bash
+# Install a package globally:
+sudo npm install -g package_name
+```
 
-    # Install project dependencies:
-    npm install
 
-    # Run a development server:
-    npm run dev
+```bash
+# Initialize a new project:
+npm init -y
+```
 
+
+```bash
+# Install project dependencies:
+npm install
+```
+
+
+```bash
+# Run a development server:
+npm run dev
+```
 

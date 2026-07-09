@@ -1,58 +1,87 @@
 ---
-title: "PIPING & REDIRECTION (The Power of Linux)"
+title: "Piping & Redirection"
 section: 5
 category: 56
-icon: "terminal"
+description: "Master the pipe operator, input/output redirection, and command chaining."
+icon: "arrow-right"
+tags: ["pipe", "redirection", "stdin", "stdout", "deep-dive"]
 ---
 
-# PIPING & REDIRECTION (The Power of Linux)
+# Piping & Redirection — The Power of Linux
 
+This is what makes the Linux terminal **incredibly powerful**. You can chain commands together like LEGO blocks.
 
-  This is what makes Linux terminal incredibly powerful.
-  You can chain commands together like LEGO blocks.
+---
 
-  PIPE ( | ):
-    Sends the OUTPUT of one command as INPUT to the next.
+## Pipe ( | )
 
-    ls -la | grep ".txt"
-      → List files, then filter to show only .txt files.
+Sends the **OUTPUT** of one command as **INPUT** to the next.
 
-    ps aux | grep chrome
-      → List all processes, then filter for Chrome.
+```bash
+# List files, then filter to show only .txt files
+ls -la | grep ".txt"
+```
 
-    cat bigfile.log | head -20
-      → Show only the first 20 lines of a big file.
+```bash
+# List all processes, then filter for Chrome
+ps aux | grep chrome
+```
 
-    history | grep "apt" | tail -5
-      → Search history for 'apt' commands, show last 5.
+```bash
+# Show only the first 20 lines of a big file
+cat bigfile.log | head -20
+```
 
-    du -sh * | sort -rh | head -10
-      → Find the 10 biggest items in current folder.
+```bash
+# Search history for 'apt' commands, show last 5
+history | grep "apt" | tail -5
+```
 
-  REDIRECT OUTPUT ( > and >> ):
+```bash
+# Find the 10 biggest items in current folder
+du -sh * | sort -rh | head -10
+```
 
-    command > file.txt
-      → Save output to file (OVERWRITES existing content).
+---
 
-    command >> file.txt
-      → APPEND output to file (adds to the end).
+## Redirect Output ( > and >> )
 
-    echo "Hello World" > greeting.txt
-      → Creates greeting.txt with "Hello World" inside.
+```bash
+# Save output to file (OVERWRITES existing content)
+command > file.txt
+```
 
-    ls -la >> file_list.txt
-      → Appends the file listing to file_list.txt.
+```bash
+# APPEND output to file (adds to the end)
+command >> file.txt
+```
 
-  REDIRECT ERRORS ( 2> ):
+```bash
+# Creates greeting.txt with "Hello World" inside
+echo "Hello World" > greeting.txt
+```
 
-    command 2> errors.txt
-      → Save error messages to a file.
+```bash
+# Appends the file listing to file_list.txt
+ls -la >> file_list.txt
+```
 
-    command > output.txt 2>&1
-      → Save BOTH normal output AND errors to the same file.
+---
 
-    command > /dev/null 2>&1
-      → Throw away ALL output (silence a noisy command).
-        /dev/null is a "black hole" — anything sent to it vanishes.
+## Redirect Errors ( 2> )
 
+```bash
+# Save error messages to a file
+command 2> errors.txt
+```
 
+```bash
+# Save BOTH normal output AND errors to the same file
+command > output.txt 2>&1
+```
+
+```bash
+# Throw away ALL output (silence a noisy command)
+# /dev/null is a "black hole" — anything sent to it vanishes
+command > /dev/null 2>&1
+```

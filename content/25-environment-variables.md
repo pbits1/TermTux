@@ -1,35 +1,45 @@
 ---
-title: "ENVIRONMENT VARIABLES"
+title: "Environment Variables"
 section: 2
 category: 25
-icon: "terminal"
+description: "Set, view, and manage environment variables and PATH."
+icon: "settings"
+tags: ['env', 'environment', 'variables', 'path', 'export', 'bashrc']
 ---
 
-# ENVIRONMENT VARIABLES
-
+# Environment Variables
 
 ```bash
 echo $HOME
 ```
-    → Print the value of the HOME variable.
+
+→ Print the value of the HOME variable.
+
 
 ```bash
 echo $PATH
 ```
-    → Print all directories where the system looks for commands.
+
+→ Print all directories where the system looks for commands.
+
 
 ```bash
 env
 ```
-    → List ALL environment variables.
+
+→ List ALL environment variables.
+
 
 ```bash
 export MY_VAR="hello"
 ```
-    → Set a temporary environment variable (lasts until terminal closes).
+
+→ Set a temporary environment variable (lasts until terminal closes).
+
 
 To make it permanent, add it to ~/.bashrc:
-    echo 'export MY_VAR="hello"' >> ~/.bashrc
-    source ~/.bashrc
-
+```bash
+echo 'export MY_VAR="hello"' >> ~/.bashrc
+source ~/.bashrc
+```
 
