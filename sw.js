@@ -1,4 +1,4 @@
-const CACHE_NAME = 'termtux-cache-v2';
+const CACHE_NAME = 'termtux-cache-v3';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -37,32 +37,63 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Fetch Event - Stale-While-Revalidate with Dynamic Caching
+// Fetch Event - Network-First for HTML/Content, Cache-First for static assets
 self.addEventListener('fetch', (e) => {
-  // Only handle local requests
+  // Only handle GET requests and local requests
+  if (e.request.method !== 'GET') return;
   if (!e.request.url.startsWith(self.location.origin)) return;
 
-  e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      const fetchPromise = fetch(e.request).then((networkResponse) => {
-        // Cache successful requests dynamically
-        if (networkResponse && networkResponse.status === 200) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(e.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      }).catch(() => {
-        // If offline and request is page routing, fall back to shell templates
-        if (e.request.url.includes('category')) {
-          return caches.match('./category.html');
-        }
-        return caches.match('./index.html') || caches.match('./404.html');
-      });
+  const url = new URL(e.request.url);
 
-      // Return cached asset instantly, fallback to network fetch
-      return cachedResponse || fetchPromise;
-    })
-  );
+  // Check if it is a page request or a content file request
+  const isHtmlOrContent = 
+    url.pathname === '/' || 
+    url.pathname.endsWith('/') ||
+    url.pathname.includes('index.html') || 
+    url.pathname.includes('category') || 
+    url.pathname.includes('content/');
+
+  if (isHtmlOrContent) {
+    // Network-First strategy
+    e.respondWith(
+      fetch(e.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(e.request, copy);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // If offline, check cache
+          return caches.match(e.request).then((cachedResponse) => {
+            if (cachedResponse) return cachedResponse;
+            // Fallbacks
+            if (url.pathname.includes('category')) {
+              return caches.match('./category.html');
+            }
+            return caches.match('./index.html') || caches.match('./404.html');
+          });
+        })
+    );
+  } else {
+    // Cache-First strategy for static assets (CSS, JS, fonts)
+    e.respondWith(
+      caches.match(e.request).then((cachedResponse) => {
+        if (cachedResponse) return cachedResponse;
+
+        return fetch(e.request).then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(e.request, copy);
+            });
+          }
+          return response;
+        });
+      })
+    );
+  }
 });
