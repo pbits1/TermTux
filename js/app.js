@@ -34,11 +34,19 @@ function init() {
 function renderSidebar() {
   if (!sidebarNav) return;
   
+  const hash = window.location.hash.substring(1);
+  const activeId = parseInt(hash);
+  
   let html = '';
   sections.forEach(section => {
+    // Check if this section contains the currently active category
+    const hasActiveCategory = activeId && section.categories.some(cat => cat.id === activeId);
+    const collapsedClass = hasActiveCategory ? '' : 'collapsed';
+    const ariaExpanded = hasActiveCategory ? 'true' : 'false';
+
     html += `
-      <div class="nav-section">
-        <button class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')" aria-expanded="true">
+      <div class="nav-section ${collapsedClass}">
+        <button class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed'); this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')" aria-expanded="${ariaExpanded}">
           <span>${section.title}</span>
           <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
@@ -60,7 +68,6 @@ function renderSidebar() {
   sidebarNav.innerHTML = html;
   
   // Highlight active item
-  const hash = window.location.hash.substring(1);
   if (hash) {
     try {
       const activeItem = sidebarNav.querySelector(`[data-id="${escapeSelector(hash)}"]`);
@@ -159,15 +166,8 @@ function setupEventListeners() {
   window.addEventListener('hashchange', () => {
     if (window.location.pathname.includes('category')) {
       handleRouting();
-      // Update sidebar active state
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      const rawHash = window.location.hash.substring(1);
-      try {
-        const activeItem = document.querySelector(`[data-id="${escapeSelector(rawHash)}"]`);
-        if (activeItem) activeItem.classList.add('active');
-      } catch (e) {
-        console.error(e);
-      }
+      // Re-render sidebar to update expanded/collapsed section states
+      renderSidebar();
       
       // Auto-close sidebar on mobile navigation
       if (sidebar && sidebar.classList.contains('open')) {
