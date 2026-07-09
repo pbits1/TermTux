@@ -93,26 +93,26 @@
       <!-- Hero -->
       <section class="page-hero fade-in-up" aria-labelledby="hero-title">
         <h1 id="hero-title">Linux Commands Directory</h1>
-        <p>A comprehensive, searchable reference guide for Linux commands, tools, and fixes. <strong>400+ commands</strong> across <strong>58 categories</strong>.</p>
+        <p>A comprehensive, searchable reference guide for Linux commands, tools, and fixes. <strong>360+ commands</strong> across <strong>59 categories</strong>.</p>
         
         <div class="stats-bar" style="justify-content: center; border: none; margin-top: var(--space-xl)">
           <div class="stat-item">
-            <div class="stat-value">58</div>
+            <div class="stat-value">59</div>
             <div class="stat-label">Categories</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value">400+</div>
+            <div class="stat-value">360+</div>
             <div class="stat-label">Commands</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value">5</div>
+            <div class="stat-value">6</div>
             <div class="stat-label">Sections</div>
           </div>
         </div>
       </section>
 
       <!-- Content Grid -->
-      <div class="content-body" id="homeSections">
+      <div class="section-grid" id="homeSections">
         <!-- Rendered by script -->
       </div>
       
@@ -131,27 +131,15 @@
     let html = '';
     
     sections.forEach((section, idx) => {
+      const firstCatId = section.categories[0].id;
       html += `
-        <div class="section-card fade-in-up stagger-${idx+1}">
+        <a href="category.html#${firstCatId}" class="section-card fade-in-up stagger-${idx+1}">
           <div class="section-card-icon" aria-hidden="true">${section.icon}</div>
           <h2>${section.title}</h2>
           <p>${section.description}</p>
           <div class="card-count">${section.categories.length} Topics</div>
-          
-          <div class="category-list-grid mt-md">
+        </a>
       `;
-      
-      section.categories.forEach(cat => {
-        html += `
-          <a href="category.html#${cat.id}" class="category-card">
-            <div class="category-card-body">
-              <h3>${cat.title}</h3>
-            </div>
-          </a>
-        `;
-      });
-      
-      html += `</div></div>`;
     });
     
     homeSections.innerHTML = html;
