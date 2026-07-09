@@ -9,63 +9,125 @@ tags: ['python', 'pip', 'venv', 'programming', 'developer']
 
 # Python
 
-## What is it?
+Python is the most popular programming language, used for scripting, web development, AI/ML, automation, and data science. Ubuntu comes with Python pre-installed.
 
-The most popular programming language. Used for scripting, web development, AI/ML, automation, data science. Ubuntu comes with Python pre-installed, but you may need extras.
+---
 
+## 1. Check Python Version
 
 ```bash
-# Check installed version:
 python3 --version
 ```
 
+---
+
+## 2. Install pip (Python Package Manager)
 
 ```bash
-# Install pip (Python package manager — like npm for Python):
 sudo apt install python3-pip
 ```
 
+---
+
+## 3. Install a Python Package Globally
 
 ```bash
-# Install a Python package:
 pip3 install package_name
 ```
 
+---
+
+## 4. Create a Virtual Environment
+
+Isolated Python workspace — keeps project dependencies separate so projects don't conflict.
 
 ```bash
-# Create a virtual environment (isolated Python workspace):
-#   WHY? To keep project dependencies separate, so one project
-#   doesn't break another.
 python3 -m venv myproject_env
 ```
 
+---
+
+## 5. Activate a Virtual Environment
 
 ```bash
-# Activate the virtual environment:
 source myproject_env/bin/activate
 ```
 
+---
+
+## 6. Install Packages Inside a Virtual Environment
 
 ```bash
-# Now pip install works inside this environment only:
 pip install flask requests numpy
 ```
 
+---
+
+## 7. Deactivate a Virtual Environment
 
 ```bash
-# Deactivate when done:
 deactivate
 ```
 
+---
+
+## 8. Run a Python Script
 
 ```bash
-# Run a Python script:
 python3 script.py
 ```
 
+---
+
+## 9. Open Python Interactive Shell
 
 ```bash
-# Open Python interactive shell:
 python3
+```
+
+---
+
+## 10. Install Python from DeadSnakes PPA (Alternate Versions)
+
+Get Python 3.12, 3.13, etc., when the default repo version isn't recent enough.
+
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12
+```
+
+---
+
+## 11. List Installed Packages
+
+```bash
+pip3 list
+```
+
+---
+
+## 12. Freeze Dependencies (for requirements.txt)
+
+Outputs all installed packages in pip's standard format for sharing with others.
+
+```bash
+pip3 freeze > requirements.txt
+```
+
+---
+
+## 13. Install Dependencies from requirements.txt
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 14. Check if a Specific Python Package is Installed
+
+```bash
+pip3 show package_name
 ```
 

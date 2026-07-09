@@ -159,3 +159,137 @@ ls /non-existent-directory
 # Print exit code (will be 2, indicating error)
 echo "Exit code: $?"
 ```
+
+---
+
+## 7. Functions
+
+Functions let you group reusable code and call it by name.
+
+```bash
+#!/bin/bash
+
+# Define a function
+greet() {
+    echo "Hello, $1!"
+}
+
+# Call the function with an argument
+greet "Alice"
+greet "Bob"
+```
+
+---
+
+## 8. Command-Line Arguments
+
+Access arguments passed to your script with `$1`, `$2`, etc.
+
+```bash
+#!/bin/bash
+
+echo "Script name: $0"
+echo "First argument: $1"
+echo "Second argument: $2"
+echo "Number of arguments: $#"
+echo "All arguments: $@"
+```
+
+```bash
+# Run with: ./script.sh foo bar
+```
+
+---
+
+## 9. String Manipulation
+
+```bash
+#!/bin/bash
+
+STR="Hello World"
+
+# String length
+echo ${#STR}
+
+# Substring (start at index 0, length 5)
+echo ${STR:0:5}
+
+# Replace "World" with "Linux"
+echo ${STR/World/Linux}
+```
+
+---
+
+## 10. Arithmetic
+
+Bash supports integer math inside `$(( ))` syntax.
+
+```bash
+#!/bin/bash
+
+A=10
+B=3
+
+SUM=$((A + B))
+DIFF=$((A - B))
+PROD=$((A * B))
+QUOT=$((A / B))
+REM=$((A % B))
+
+echo "Sum: $SUM"
+echo "Product: $PROD"
+```
+
+---
+
+## 11. File Tests
+
+Check file properties before operating on them.
+
+```bash
+#!/bin/bash
+
+FILE="myfile.txt"
+
+if [ -f "$FILE" ]; then
+    echo "$FILE exists"
+fi
+
+if [ -r "$FILE" ]; then
+    echo "$FILE is readable"
+fi
+
+if [ -w "$FILE" ]; then
+    echo "$FILE is writable"
+fi
+
+if [ -d "/tmp" ]; then
+    echo "/tmp is a directory"
+fi
+```
+
+---
+
+## 12. Debugging Scripts
+
+```bash
+# Run script with verbose output
+bash -x script.sh
+
+# Or add set flags inside the script
+#!/bin/bash
+set -x  # Print commands as they execute
+set -e  # Exit on first error
+```
+
+---
+
+## 13. Working with JSON (jq in scripts)
+
+```bash
+#!/bin/bash
+
+# Extract a value from JSON
+VERSION=$(cat package.json | jq -r '.version')
+echo "Project version: $VERSION"
+```
