@@ -136,10 +136,10 @@ journalctl --list-boots
 
 ---
 
-## `journalctl --failed`
+## `systemctl --failed`
 
-Show only failed services/units.
+Show only failed systemd services/units.
 
 ```bash
-journalctl --failed
+systemctl --failed
 ```

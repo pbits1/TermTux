@@ -32,14 +32,18 @@ sudo apt --fix-broken install
 ~/Antigravity-x64/antigravity --no-sandbox
 ```
 
+> [!WARNING]
+> **SECURITY RISK:**
+> The `--no-sandbox` flag disables the Chromium security sandbox. Only use this if you encounter startup or execution sandbox errors.
+
 > **💡 Tip:** To create a desktop shortcut, create a `.desktop` file — see Section 12 for the `.desktop` file format.
 
 ---
 
 ## Auto-Updates
 
-Antigravity updates automatically via its built-in updater. Your apt repo is already configured:
+If you installed via the `.deb` package, your apt repository is configured to receive updates from:
 
-```
+```text
 https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev
 ```

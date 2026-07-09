@@ -59,7 +59,7 @@ ss -t
 sudo ss -tulnp
 
 # Show connections to a specific port
-ss -tuln sport = :22
+ss -tuln 'sport = :22'
 
 # Show IP addresses instead of hostnames
 ss -nt
@@ -176,10 +176,15 @@ iperf3 -c 192.168.1.100
 
 ## 10. Check Wi-Fi Signal Strength
 
+Note: Run `ip link` or `nmcli device` to find your active Wi-Fi interface name (e.g. `wlan0`, `wlp2s0`).
+
 ```bash
-# Show Wi-Fi signal and connection quality
+# Show Wi-Fi signal and quality (modern 'iw' method)
+iw dev wlp2s0 link
+
+# Legacy alternative (requires wireless-tools)
 iwconfig wlp2s0
 
-# Scan available networks and their signal strengths
+# Scan available networks and signal strengths
 sudo iw dev wlp2s0 scan | grep -E "SSID|signal"
 ```

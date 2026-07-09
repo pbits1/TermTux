@@ -35,6 +35,13 @@ sudo apt install python3-pip
 pip3 install package_name
 ```
 
+> [!WARNING]
+> **PEP 668 Restrictions:**
+> On Ubuntu 23.04+ (and Debian 12+), installing packages globally using `pip3` is restricted by default. It is highly recommended to use a virtual environment (see Section 4). If you absolutely must install a package globally, append the `--break-system-packages` flag:
+> ```bash
+> pip3 install package_name --break-system-packages
+> ```
+
 ---
 
 ## 4. Create a Virtual Environment

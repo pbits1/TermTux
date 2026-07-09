@@ -48,7 +48,7 @@ sudo apt purge package-name
 Find available software packages in the repositories matching a specific search keyword.
 
 ```bash
-sudo apt search keyword
+apt search keyword
 ```
 
 ---

@@ -13,12 +13,12 @@ Must-have utilities that make Ubuntu even better.
 
 ---
 
-## neofetch — System Info Display
+## fastfetch — System Info Display
 
-Show system info in a pretty format (great for screenshots!).
+Show system info in a pretty format (modern, active replacement for the archived `neofetch` tool).
 
 ```bash
-sudo apt install neofetch
+sudo apt install fastfetch
 ```
 
 ---
@@ -103,7 +103,7 @@ sudo apt install stacer
 
 ---
 
-### Tools with Dedicated Guides
+## Tools with Dedicated Guides
 
 These tools have their own full categories with detailed instructions:
 

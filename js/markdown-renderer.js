@@ -39,7 +39,9 @@ export function renderMarkdown(markdown) {
     let isFirstDataRow = true;
 
     for (const row of dataRows) {
-      const cells = row.split('│').map(c => c.trim()).filter(c => c !== '');
+      let cells = row.split('│').map(c => c.trim());
+      if (cells[0] === '') cells.shift();
+      if (cells[cells.length - 1] === '') cells.pop();
       if (cells.length === 0) continue;
 
       html += '<tr>';
@@ -66,9 +68,12 @@ export function renderMarkdown(markdown) {
 
     let html = '<div class="table-wrapper"><table>';
     rows.forEach((row, index) => {
-      const cells = row.split('|').filter(cell => cell.trim() !== '');
+      let cells = row.split('|');
+      if (cells[0] === '') cells.shift();
+      if (cells[cells.length - 1] === '') cells.pop();
+      
       // Skip separator row (e.g. |---|---|)
-      if (index === 1 && cells.every(c => c.trim().match(/^[-:]+$/))) return;
+      if (index === 1 && cells.every(c => c.trim().match(/^[-:]*$/) && c.trim() !== '')) return;
 
       html += '<tr>';
       cells.forEach(cell => {

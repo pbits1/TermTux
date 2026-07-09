@@ -9,88 +9,140 @@ tags: ['git', 'github', 'version-control', 'developer']
 
 # Git (Version Control)
 
-## What is it?
-
 Tracks changes to your code over time. Like "undo history" for your entire project. Used by every developer. GitHub, GitLab, and Bitbucket are websites that host Git repositories online.
 
+---
+
+## 1. Install Git
+
+Install the Git package from the official repository index.
 
 ```bash
-# Install:
 sudo apt install git
 ```
 
+---
+
+## 2. First-Time Setup
+
+Configure your identity once so your commits are correctly attributed.
 
 ```bash
-# First-time setup (do this once):
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
 
+---
+
+## 3. Clone a Repository
+
+Download an existing remote repository from GitHub, GitLab, or Bitbucket to your local machine.
 
 ```bash
-# Clone (download) a repository from GitHub:
 git clone https://github.com/username/repo.git
 ```
 
+---
+
+## 4. Check Changes Status
+
+See which files have been modified, created, or staged for the next save.
 
 ```bash
-# Check status of your changes:
 git status
 ```
 
+---
+
+## 5. Stage Files for Saving
+
+Add your changes to the staging index to prepare them for a commit.
 
 ```bash
-# Stage ALL changed files:
+# Stage ALL changed files
 git add .
 
-# Stage one specific file:
+# Stage one specific file
 git add filename.py
 ```
 
+---
+
+## 6. Commit Changes (Save Point)
+
+Save a named checkpoint of your staged changes locally with a descriptive message.
 
 ```bash
-# Commit (save a checkpoint):
 git commit -m "Describe what you changed"
 ```
 
+---
+
+## 7. Push Changes to Remote
+
+Upload your local commit saves to the remote repository on GitHub.
 
 ```bash
-# Push to GitHub (upload your commits):
 git push
 ```
 
+---
+
+## 8. Pull Remote Changes
+
+Download and merge any updates made to the remote repository by other contributors.
 
 ```bash
-# Pull latest changes (download from GitHub):
 git pull
 ```
 
+---
+
+## 9. View Commit History
+
+List the recent checkpoints with their identifiers and messages.
 
 ```bash
-# See commit history:
 git log --oneline -10
 ```
 
+---
+
+## 10. Create and Switch Branches
+
+Create a new isolated branch line to work on features without modifying the main line.
 
 ```bash
-# Create a new branch (work on features without breaking main):
+# Create a new branch and switch to it
 git checkout -b feature-name
 ```
 
+---
+
+## 11. Switch Between Branches
+
+Switch your current workspace to another branch.
 
 ```bash
-# Switch between branches:
 git checkout main
 ```
 
+---
+
+## 12. Merge Branches
+
+Integrate the changes from one branch into your current branch (e.g. main).
 
 ```bash
-# Merge a branch into main:
 git checkout main
 git merge feature-name
 ```
 
+---
 
-## GIT WORKFLOW CHEAT SHEET
+## Git Workflow Cheat Sheet
 
-Edit files → git add . → git commit -m "message" → git push
+> **Standard Daily Workflow:**
+> ```text
+> Edit files ──> git add . ──> git commit -m "message" ──> git push
+> ```

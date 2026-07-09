@@ -2,7 +2,7 @@
 title: "Docker Deep Dive"
 section: 6
 category: 76
-description: "Build images with Dockerfile, use docker-compose for multi-container apps, manage volumes, and optimize images."
+description: "Build images with Dockerfile, use docker compose for multi-container apps, manage volumes, and optimize images."
 icon: "box"
 tags: ["docker", "compose", "dockerfile", "containers", "volumes", "networks", "images"]
 ---
@@ -60,10 +60,9 @@ docker build -t my-app:latest .
 
 ## 3. Docker Compose — Multi-Container Setup
 
-Define complex apps with multiple services (e.g., web + database + cache) in a single `docker-compose.yml`.
+Define complex apps with multiple services (e.g., web + database + cache) in a single `compose.yaml` configuration.
 
 ```yaml
-version: '3.8'
 services:
   web:
     build: .
@@ -74,6 +73,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
+      # Note: Use a strong password or environment variable/secret in production!
       POSTGRES_PASSWORD: secret
 
 volumes:

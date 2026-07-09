@@ -111,7 +111,7 @@ Starship is pre-configured, but you can download official style presets. For exa
 mkdir -p ~/.config
 
 # Save preset config
-starship preset bracketed-boots > ~/.config/starship.toml
+starship preset bracketed-segments > ~/.config/starship.toml
 ```
 
 ---

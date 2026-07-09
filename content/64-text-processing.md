@@ -191,5 +191,5 @@ jq '.name' package.json
 jq '.dependencies | keys' package.json
 
 # Filter array elements
-curl https://api.github.com/repos/pbits1/TermTux/commits | jq '.[0].commit.message'
+curl https://api.github.com/repos/your-username/your-repo/commits | jq '.[0].commit.message'
 ```

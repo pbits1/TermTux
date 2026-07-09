@@ -15,11 +15,19 @@ Node.js runs JavaScript outside the browser. npm is its package manager. Essenti
 
 ## 1. Install Node.js via NodeSource
 
-NodeSource provides the latest stable Node.js releases for Ubuntu.
+NodeSource provides official Node.js binaries. Set up the modern signed-by repository:
 
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-sudo apt install nodejs
+# Import GPG key and add signed-by repository source
+sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+# Set major version and register the repository list
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+# Update package lists and install Node.js
+sudo apt-get update && sudo apt-get install nodejs -y
 ```
 
 ---

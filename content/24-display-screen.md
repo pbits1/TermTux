@@ -21,11 +21,13 @@ View all connected monitors, default outputs, and supported resolutions.
 xrandr
 ```
 
+> **Note:** `xrandr` is an X11 tool. If you are using a modern Ubuntu release running Wayland by default, use system settings for display configuration.
+
 ---
 
 ## 2. Set Monitor Resolution
 
-Change the resolution of a specific display output (e.g., HDMI-1).
+Change the resolution of a specific display output (e.g., HDMI-1) on X11.
 
 ```bash
 xrandr --output HDMI-1 --mode 1920x1080
@@ -61,6 +63,8 @@ Take a screenshot of the entire desktop screen.
 gnome-screenshot
 ```
 
+> **Note:** `gnome-screenshot` is deprecated in Ubuntu 22.04+ (which uses a built-in interactive overlay tool instead). On newer versions, you can install it using `sudo apt install gnome-screenshot` if you need the CLI command.
+
 ---
 
 ## 6. Screenshot Selected Area
@@ -75,7 +79,7 @@ gnome-screenshot -a
 
 ## 7. Simulate Keyboard Keys
 
-Programmatically trigger keyboard presses (e.g., simulate the Print Screen key).
+Programmatically trigger keyboard presses (requires `sudo apt install xdotool`).
 
 ```bash
 xdotool key Print

@@ -24,7 +24,7 @@ tags: ['windows', 'linux', 'translation', 'cheatsheet', 'migration']
 | Recycle Bin | ~/.local/share/Trash |
 | Device Manager | lspci / lsusb / lshw |
 | Disk Management | gnome-disks / fdisk / lsblk |
-| Windows Update | sudo apt update && upgrade |
+| Windows Update | sudo apt update && sudo apt upgrade |
 | Microsoft Store | Ubuntu Software / Snap Store |
 | .zip | .tar.gz / .zip |
 | Notepad | gedit / nano |

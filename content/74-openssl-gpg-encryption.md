@@ -48,12 +48,14 @@ md5sum file.iso
 Symmetric encryption using AES-256.
 
 ```bash
-# Encrypt a file (you'll be prompted for a password)
-openssl enc -aes-256-cbc -salt -in secret.txt -out secret.enc
+# Encrypt a file securely (you'll be prompted for a password)
+openssl enc -aes-256-cbc -salt -pbkdf2 -in secret.txt -out secret.enc
 
 # Decrypt the file
-openssl enc -aes-256-cbc -d -in secret.enc -out secret.txt
+openssl enc -aes-256-cbc -d -pbkdf2 -in secret.enc -out secret.txt
 ```
+
+> **Note:** Modern versions of OpenSSL (1.1.1+) require `-pbkdf2` for secure key derivation. If you are decrypting a legacy file created with older OpenSSL versions, you may need to omit `-pbkdf2`.
 
 ---
 

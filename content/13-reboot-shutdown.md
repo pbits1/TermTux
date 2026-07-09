@@ -63,9 +63,12 @@ Windows and Linux handle low-power states differently. Here is how they behave:
 * **Why?** It requires a Swap space larger than your physical RAM size, can be unreliable on certain graphics card drivers, and is blocked by secure boot.
 * **How to test if your hardware supports it:**
   ```bash
-  # Save your work before running this test!
   sudo systemctl hibernate
   ```
+
+> [!WARNING]
+> **SAVE YOUR WORK BEFORE TESTING HIBERNATION:**
+> Running `sudo systemctl hibernate` can cause data loss or freeze your system if hibernation is not properly supported by your hardware or Swap configuration. Make sure all open documents are saved.
 
 ### Fast Startup (Windows Hybrid Boot)
 * **What it is:** Windows logs you out, saves the Kernel state to a file, and shuts down to speed up subsequent boots.

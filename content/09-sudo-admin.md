@@ -21,7 +21,15 @@ Grant temporary passwordless sudo access (for automation tools).
 echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/temp-antigravity
 ```
 
-> **⚠️ Warning:** This is a **SECURITY RISK** — only use temporarily!
+> [!CAUTION]
+> **CRITICAL SECURITY & SYSTEM LOCKOUT RISK:**
+> - Granting passwordless sudo allows **unrestricted root** access to your user account. Only use this temporarily.
+> - If you edit sudoers files and introduce a syntax error, **you can lock yourself out of sudo access permanently**.
+> - Always validate your sudoers changes by running:
+>   ```bash
+>   sudo visudo -c
+>   ```
+>   Verify that it reports `parsed OK` before closing your root session.
 
 ---
 
