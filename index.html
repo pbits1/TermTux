@@ -18,10 +18,10 @@
   <!-- Favicon (Ubuntu orange circle) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23E95420'/><text x='50' y='68' font-size='50' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>T</text></svg>" type="image/svg+xml">
   
-  <link rel="stylesheet" href="css/yaru-tokens.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="/css/yaru-tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
 
   <!-- Prevent FOUC on dark mode -->
   <script>
@@ -126,16 +126,16 @@
   </button>
 
   <script type="module">
-    import { sections } from './js/categories.js';
+    import { sections } from '/js/categories.js';
     
     // Render home sections
     const homeSections = document.getElementById('homeSections');
     let html = '';
     
     sections.forEach((section, idx) => {
-      const firstCatId = section.categories[0].id;
+      const firstCat = section.categories[0];
       html += `
-        <a href="category.html#${firstCatId}" class="section-card fade-in-up stagger-${idx+1}">
+        <a href="/category/${firstCat.slug}" class="section-card fade-in-up stagger-${idx+1}">
           <div class="section-card-icon" aria-hidden="true">${section.icon}</div>
           <h2>${section.title}</h2>
           <p>${section.description}</p>
@@ -146,11 +146,11 @@
     
     homeSections.innerHTML = html;
   </script>
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="/js/app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('/sw.js')
           .then(reg => console.log('Service Worker registered.'))
           .catch(err => console.error('Service Worker registration failed:', err));
       });

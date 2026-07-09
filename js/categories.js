@@ -112,4 +112,16 @@ const sections = [
   }
 ];
 
+// Dynamically generate slugs for all categories at runtime
+sections.forEach(s => {
+  s.categories.forEach(c => {
+    c.slug = c.title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  });
+});
+
 export { sections };
