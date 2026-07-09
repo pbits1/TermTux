@@ -1,6 +1,6 @@
 ---
 title: "Sudo / Admin Access"
-section: 1
+section: 2
 category: 9
 description: "Grant and revoke temporary passwordless sudo access for automation."
 icon: "shield"

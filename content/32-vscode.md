@@ -1,6 +1,6 @@
 ---
 title: "Visual Studio Code (VS Code)"
-section: 3
+section: 4
 category: 32
 description: "Install and set up VS Code — a powerful, free code editor by Microsoft"
 icon: "code"

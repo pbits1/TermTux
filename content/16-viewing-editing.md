@@ -1,6 +1,6 @@
 ---
 title: "Viewing & Editing Files"
-section: 2
+section: 3
 category: 16
 description: "View file contents, edit files in the terminal, count lines, and compare files."
 icon: "book"

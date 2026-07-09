@@ -1,6 +1,6 @@
 ---
 title: "Package Management (APT)"
-section: 1
+section: 2
 category: 3
 description: "Manage software packages using Ubuntu's APT package manager — update, upgrade, and clean up."
 icon: "package"

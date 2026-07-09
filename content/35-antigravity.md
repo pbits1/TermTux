@@ -1,6 +1,6 @@
 ---
 title: "Google Antigravity (AI Coding Assistant)"
-section: 3
+section: 4
 category: 35
 description: "Install Google Antigravity — an AI-powered desktop coding assistant"
 icon: "code"

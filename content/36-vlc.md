@@ -1,6 +1,6 @@
 ---
 title: "VLC Media Player"
-section: 3
+section: 4
 category: 36
 description: "Install VLC — the best media player that plays every format"
 icon: "video"

@@ -1,6 +1,6 @@
 ---
 title: "File & Folder Operations"
-section: 2
+section: 3
 category: 15
 description: "Create, copy, move, rename, and delete files and folders."
 icon: "folder"

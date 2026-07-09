@@ -1,6 +1,6 @@
 ---
 title: "Time Synchronization"
-section: 1
+section: 2
 category: 5
 description: "Check and fix system time, timezone, and NTP synchronization."
 icon: "clock"

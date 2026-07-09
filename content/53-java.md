@@ -1,6 +1,6 @@
 ---
 title: "Java (JDK)"
-section: 4
+section: 5
 category: 53
 description: "Install Java JDK for Java development."
 icon: "coffee"

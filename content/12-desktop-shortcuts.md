@@ -1,6 +1,6 @@
 ---
 title: "Desktop Shortcuts"
-section: 1
+section: 2
 category: 12
 description: "Create and configure .desktop shortcut files for launching applications."
 icon: "display"

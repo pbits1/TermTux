@@ -1,6 +1,6 @@
 ---
 title: "qBittorrent"
-section: 3
+section: 4
 category: 45
 description: "Install qBittorrent — a clean, ad-free torrent client"
 icon: "download"

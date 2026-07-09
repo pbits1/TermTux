@@ -1,6 +1,6 @@
 ---
 title: "Telegram"
-section: 3
+section: 4
 category: 42
 description: "Install Telegram — fast, secure messaging app for Linux"
 icon: "chat"

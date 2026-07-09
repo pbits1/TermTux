@@ -1,6 +1,6 @@
 ---
 title: "The Linux Filesystem Explained"
-section: 5
+section: 6
 category: 54
 description: "Understand the Linux directory structure and hierarchy."
 icon: "folder"

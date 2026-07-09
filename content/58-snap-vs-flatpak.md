@@ -1,6 +1,6 @@
 ---
 title: "Snap vs Flatpak vs APT vs .DEB"
-section: 5
+section: 6
 category: 58
 description: "Understand the differences between package formats and when to use each."
 icon: "layers"

@@ -1,6 +1,6 @@
 ---
 title: "System Services (systemctl)"
-section: 2
+section: 3
 category: 20
 description: "Start, stop, enable, and manage system services with systemctl."
 icon: "settings"

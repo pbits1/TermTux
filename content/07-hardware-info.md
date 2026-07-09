@@ -1,6 +1,6 @@
 ---
 title: "Hardware & System Information"
-section: 1
+section: 2
 category: 7
 description: "Get detailed hardware info — laptop model, BIOS version, serial number, and more."
 icon: "disk"

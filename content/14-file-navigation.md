@@ -1,6 +1,6 @@
 ---
 title: "Navigating the File System"
-section: 2
+section: 3
 category: 14
 description: "Move around the file system, list files, and find your way in the terminal."
 icon: "folder"

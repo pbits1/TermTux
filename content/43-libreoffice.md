@@ -1,6 +1,6 @@
 ---
 title: "LibreOffice"
-section: 3
+section: 4
 category: 43
 description: "Install LibreOffice — free Microsoft Office alternative"
 icon: "book"

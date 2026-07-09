@@ -1,6 +1,6 @@
 ---
 title: "Steam (Gaming)"
-section: 3
+section: 4
 category: 41
 description: "Install Steam — Valve's game store and launcher for Linux gaming"
 icon: "game"

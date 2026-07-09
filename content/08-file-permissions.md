@@ -1,6 +1,6 @@
 ---
 title: "File & Permission Management"
-section: 1
+section: 2
 category: 8
 description: "Make files executable, check permissions, and trust desktop files."
 icon: "shield"

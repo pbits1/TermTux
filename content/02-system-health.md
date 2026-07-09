@@ -1,6 +1,6 @@
 ---
 title: "System Health & Monitoring"
-section: 1
+section: 2
 category: 2
 description: "Monitor system uptime, memory, disk space, and running processes."
 icon: "display"

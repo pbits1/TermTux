@@ -1,6 +1,6 @@
 ---
 title: "Brave Browser"
-section: 3
+section: 4
 category: 34
 description: "Install Brave — a privacy-focused browser built on Chromium"
 icon: "shield"

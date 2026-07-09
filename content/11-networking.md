@@ -1,6 +1,6 @@
 ---
 title: "Networking"
-section: 1
+section: 2
 category: 11
 description: "Check web service status and send desktop notifications."
 icon: "network"

@@ -1,6 +1,6 @@
 ---
 title: "Spotify"
-section: 3
+section: 4
 category: 40
 description: "Install Spotify — music streaming service for Linux"
 icon: "music"

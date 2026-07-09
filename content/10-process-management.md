@@ -1,6 +1,6 @@
 ---
 title: "Process Management"
-section: 1
+section: 2
 category: 10
 description: "Find, stop, and manage running processes."
 icon: "terminal"

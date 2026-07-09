@@ -1,6 +1,6 @@
 ---
 title: "Git (Version Control)"
-section: 4
+section: 5
 category: 51
 description: "Set up and use Git for version control."
 icon: "git-branch"

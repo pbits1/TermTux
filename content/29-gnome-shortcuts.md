@@ -1,6 +1,6 @@
 ---
 title: "GNOME Desktop Shortcuts"
-section: 2
+section: 3
 category: 29
 description: "Essential keyboard shortcuts for the GNOME desktop."
 icon: "keyboard"

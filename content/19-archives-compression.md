@@ -1,6 +1,6 @@
 ---
 title: "Archive & Compression"
-section: 2
+section: 3
 category: 19
 description: "Compress and extract files using tar, gzip, and zip."
 icon: "package"

@@ -1,6 +1,6 @@
 ---
 title: "Searching & Finding"
-section: 2
+section: 3
 category: 17
 description: "Find files by name, size, or date, and search inside files for text patterns."
 icon: "search"

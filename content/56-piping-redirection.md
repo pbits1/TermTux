@@ -1,6 +1,6 @@
 ---
 title: "Piping & Redirection"
-section: 5
+section: 6
 category: 56
 description: "Master the pipe operator, input/output redirection, and command chaining."
 icon: "arrow-right"

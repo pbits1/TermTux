@@ -1,6 +1,6 @@
 ---
 title: "Common Problems & Fixes"
-section: 5
+section: 6
 category: 57
 description: "Solutions for the most common Ubuntu/Linux problems."
 icon: "alert-triangle"

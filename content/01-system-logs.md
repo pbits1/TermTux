@@ -1,6 +1,6 @@
 ---
 title: "System Logs"
-section: 1
+section: 2
 category: 1
 description: "View and filter system logs using journalctl — the Linux equivalent of Windows Event Viewer."
 icon: "terminal"

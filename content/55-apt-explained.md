@@ -1,6 +1,6 @@
 ---
 title: "APT Package Manager — How It Works"
-section: 5
+section: 6
 category: 55
 description: "Deep dive into how APT finds, downloads, and installs packages."
 icon: "package"

@@ -1,6 +1,6 @@
 ---
 title: "GIMP (Image Editor)"
-section: 3
+section: 4
 category: 37
 description: "Install GIMP — a free and open-source Photoshop alternative"
 icon: "image"

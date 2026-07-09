@@ -1,6 +1,6 @@
 ---
 title: "Google Chrome"
-section: 3
+section: 4
 category: 33
 description: "Install Google Chrome browser on Ubuntu"
 icon: "download"

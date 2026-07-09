@@ -1,6 +1,6 @@
 ---
 title: "Node.js & NPM"
-section: 4
+section: 5
 category: 50
 description: "Install Node.js and npm for JavaScript development."
 icon: "code"

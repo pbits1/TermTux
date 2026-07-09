@@ -1,6 +1,6 @@
 ---
 title: "User & Permission Management"
-section: 2
+section: 3
 category: 18
 description: "Manage users, groups, passwords, and file permissions with the numeric cheat sheet."
 icon: "shield"

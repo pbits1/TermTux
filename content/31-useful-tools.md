@@ -1,6 +1,6 @@
 ---
 title: "Useful Tools to Install"
-section: 2
+section: 3
 category: 31
 description: "Recommended tools to enhance your Ubuntu experience."
 icon: "tool"
@@ -9,17 +9,7 @@ tags: ["tools", "utilities", "recommended", "install"]
 
 # Useful Tools to Install
 
-Must-have utilities that make Ubuntu even better. Install them all in one go!
-
----
-
-## htop — Better Task Manager
-
-Interactive, colorful process viewer.
-
-```bash
-sudo apt install htop
-```
+Must-have utilities that make Ubuntu even better.
 
 ---
 
@@ -93,44 +83,12 @@ sudo apt install dconf-editor
 
 ---
 
-## timeshift — System Restore
-
-System restore / backup tool (like System Restore in Windows).
-
-```bash
-sudo apt install timeshift
-```
-
-> **⚠️ HIGHLY RECOMMENDED** — Set up weekly snapshots!
-
----
-
 ## gparted — Partition Manager
 
 GUI partition manager (like Disk Management in Windows).
 
 ```bash
 sudo apt install gparted
-```
-
----
-
-## vlc — Media Player
-
-Best media player — plays everything.
-
-```bash
-sudo apt install vlc
-```
-
----
-
-## gimp — Image Editor
-
-Image editor (Photoshop alternative).
-
-```bash
-sudo apt install gimp
 ```
 
 ---
@@ -142,3 +100,14 @@ System optimizer and monitor (like CCleaner for Linux).
 ```bash
 sudo apt install stacer
 ```
+
+---
+
+### Tools with Dedicated Guides
+
+These tools have their own full categories with detailed instructions:
+
+- **htop** → [Category 47: htop Guide](category.html#47)
+- **VLC** → [Category 36: VLC Media Player](category.html#36)
+- **GIMP** → [Category 37: GIMP Image Editor](category.html#37)
+- **Timeshift** → [Category 48: Timeshift System Restore](category.html#48)

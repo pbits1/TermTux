@@ -1,6 +1,6 @@
 ---
 title: "Thunderbird (Email Client)"
-section: 3
+section: 4
 category: 44
 description: "Install Thunderbird — free email client and Outlook alternative"
 icon: "mail"

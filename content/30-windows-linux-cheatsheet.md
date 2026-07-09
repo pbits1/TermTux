@@ -1,6 +1,6 @@
 ---
 title: "Windows → Linux Translation Cheat Sheet"
-section: 2
+section: 3
 category: 30
 description: "Find Linux equivalents for common Windows commands and actions."
 icon: "refresh-cw"

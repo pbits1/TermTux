@@ -1,6 +1,6 @@
 ---
 title: "OBS Studio (Screen Recording & Streaming)"
-section: 3
+section: 4
 category: 38
 description: "Install OBS Studio — the #1 tool for screen recording and live streaming"
 icon: "video"

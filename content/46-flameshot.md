@@ -1,6 +1,6 @@
 ---
 title: "Flameshot (Screenshot Tool)"
-section: 3
+section: 4
 category: 46
 description: "Install Flameshot — a powerful screenshot tool with annotation support"
 icon: "image"

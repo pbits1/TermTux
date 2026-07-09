@@ -1,6 +1,6 @@
 ---
 title: "Timeshift (System Restore)"
-section: 3
+section: 4
 category: 48
 description: "Install Timeshift — system backup and restore tool (HIGHLY RECOMMENDED!)"
 icon: "clock"

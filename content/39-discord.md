@@ -1,6 +1,6 @@
 ---
 title: "Discord"
-section: 3
+section: 4
 category: 39
 description: "Install Discord — voice, video, and text chat platform"
 icon: "chat"

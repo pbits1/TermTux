@@ -1,6 +1,6 @@
 ---
 title: "Python"
-section: 4
+section: 5
 category: 49
 description: "Install and manage Python, pip, virtual environments."
 icon: "code"

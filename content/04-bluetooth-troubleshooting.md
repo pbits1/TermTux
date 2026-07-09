@@ -1,6 +1,6 @@
 ---
 title: "Bluetooth Troubleshooting"
-section: 1
+section: 2
 category: 4
 description: "Fix common Bluetooth issues — restart the service, unblock devices, and check status."
 icon: "settings"

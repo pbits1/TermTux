@@ -1,6 +1,6 @@
 ---
 title: "Terminal Keyboard Shortcuts"
-section: 2
+section: 3
 category: 28
 description: "Essential keyboard shortcuts for the terminal."
 icon: "keyboard"

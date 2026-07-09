@@ -1,6 +1,6 @@
 ---
 title: "Snap Package Management"
-section: 1
+section: 2
 category: 6
 description: "Manage Snap packages — Ubuntu's containerized app format."
 icon: "package"

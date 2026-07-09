@@ -1,6 +1,6 @@
 ---
 title: "htop (Task Manager)"
-section: 3
+section: 4
 category: 47
 description: "Install htop — an interactive, colorful process viewer"
 icon: "settings"
