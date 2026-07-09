@@ -1,28 +1,48 @@
 ---
-title: "Ubuntu Installation Guide"
-section: 5
+title: "Linux Installation Guide"
+section: 1
 category: 59
-description: "Step-by-step guide to installing Ubuntu Linux (Dual boot, UEFI, partitioning)."
+description: "Step-by-step guide to choosing a distro and installing Linux (Dual boot, UEFI, partitioning)."
 icon: "hard-drive"
-tags: ["install", "ubuntu", "dual-boot", "partition", "uefi", "bios", "usb", "bootloader"]
+tags: ["install", "ubuntu", "distros", "dual-boot", "partition", "uefi", "bios", "usb"]
 ---
 
-# Ubuntu Installation Guide
+# Linux Installation Guide
 
-A complete, step-by-step walkthrough to flashing and installing Ubuntu Linux on your computer, including partitioning and dual-boot configurations.
+Before you can run commands, you need to install Linux. This guide covers how to choose a Linux distribution (distro) and install it on your machine.
 
 ---
 
-## 1. Prerequisites
+## 1. What is a Linux Distribution (Distro)?
 
-Before starting, make sure you have:
+Linux is not a single operating system. It is a **kernel** (the core engine). A **Distribution (Distro)** is a complete operating system built on top of the Linux kernel, including a desktop interface, package manager, and pre-installed software.
+
+Different distros are tailored for different needs:
+
+* **Ubuntu** — The most popular distro. Great support, highly stable, and widely used by developers.
+* **Linux Mint** — Excellent for beginners migrating from Windows. Its interface looks and feels like Windows.
+* **Fedora** — Sponsored by Red Hat. Always includes the latest software features and clean designs.
+* **Debian** — Extremely stable and rock-solid. The foundation that Ubuntu itself is built upon.
+* **Arch Linux** — A lightweight, DIY distro for advanced users. You install and configure everything manually.
+
+### Distro Download Links
+* Download [Ubuntu Desktop LTS](https://ubuntu.com/download/desktop) (Recommended)
+* Download [Linux Mint Cinnamon](https://linuxmint.com/download.php) (Best Windows alternative)
+* Download [Fedora Workstation](https://fedoraproject.org/workstation/download) (For modern packages)
+* Download [Debian Netinst](https://www.debian.org/distrib/) (For server or extreme stability)
+* Download [Arch Linux](https://archlinux.org/download/) (For advanced users)
+
+---
+
+## 2. Prerequisites
+
 * A **USB flash drive** (8GB or larger) — *Note: This drive will be erased.*
-* The latest **Ubuntu ISO image** (Download the LTS version from [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)).
+* The downloaded `.iso` file of your chosen distro from the links above.
 * A backup of your important files (just in case).
 
 ---
 
-## 2. Creating a Bootable USB
+## 3. Creating a Bootable USB
 
 You need to write the downloaded ISO file to your USB drive so your computer can boot from it.
 
@@ -30,20 +50,20 @@ You need to write the downloaded ISO file to your USB drive so your computer can
 1. Download **Rufus** (free tool from [rufus.ie](https://rufus.ie)).
 2. Plug in your USB drive and open Rufus.
 3. Select your USB drive under **Device**.
-4. Click **Select** and choose the downloaded Ubuntu `.iso` file.
+4. Click **Select** and choose the downloaded `.iso` file.
 5. Keep **Partition scheme** as `GPT` and **Target system** as `UEFI`.
 6. Click **Start** and select "Write in ISO Image mode".
 
 ### On macOS / Linux
 1. Download **balenaEtcher** (free tool from [etcher.balena.io](https://etcher.balena.io)).
 2. Connect your USB drive and open balenaEtcher.
-3. Click **Flash from file** and select the Ubuntu `.iso`.
+3. Click **Flash from file** and select the `.iso`.
 4. Click **Select target** and choose your USB drive.
 5. Click **Flash!**
 
 ---
 
-## 3. Configuring BIOS/UEFI Settings
+## 4. Configuring BIOS/UEFI Settings
 
 1. Shut down your PC completely.
 2. Turn it on and immediately press your motherboard's BIOS key repeatedly (typically `F2`, `F12`, `Delete`, or `Esc` depending on your brand).
@@ -54,31 +74,19 @@ You need to write the downloaded ISO file to your USB drive so your computer can
 
 ---
 
-## 4. The Installation Steps
-
-Once your PC boots from the USB, you will see the Ubuntu Welcome screen:
-
-1. Select your language and click **Install Ubuntu**.
-2. Choose your keyboard layout.
-3. Select **Normal installation** (includes browser, office tools, media players) or **Minimal installation**.
-4. Check **Install third-party software for graphics and Wi-Fi hardware** (critical for Nvidia graphics cards and proprietary Wi-Fi chips).
-
----
-
 ## 5. Partitioning (Installation Type)
 
-This is the most critical step. Choose one of the following options:
+When the installer boots, it will ask where to install the files:
 
-### Option A: Erase Disk and Install Ubuntu (Easiest)
+### Option A: Erase Disk and Install (Easiest)
 * **When to use:** If you want Linux to be the ONLY operating system on this drive.
 * **What it does:** Automatically erases all existing data and configures partitions.
 
 ### Option B: Install Alongside Windows (Automatic Dual Boot)
 * **When to use:** If you want to keep Windows and choose which OS to run at boot.
-* **What it does:** Automatically shrinks your Windows partition to make space for Ubuntu.
+* **What it does:** Automatically shrinks your Windows partition to make space for Linux.
 
 ### Option C: Something Else (Manual Partitioning)
-* **When to use:** Advanced users who want custom sizes for system folders.
 * **Recommended Manual Partitions (for a 100GB space):**
   1. **EFI System Partition** (Size: `500MB`, Type: `Primary`, Location: `Beginning of space`). Used for boot files.
   2. **Root Partition `/`** (Size: `30GB - 50GB`, Format: `Ext4`, Mount Point: `/`). Stores operating system files.
@@ -101,12 +109,15 @@ This is the most critical step. Choose one of the following options:
 
 ## 7. Post-Installation Checklist
 
-Once logged into your new Ubuntu desktop, run these initial commands in the terminal:
+Once logged into your new Linux desktop, run these initial commands in the terminal:
 
 ```bash
-# 1. Update the system package lists and upgrade packages
+# Update the system package lists and upgrade packages (Ubuntu/Debian-based)
 sudo apt update && sudo apt upgrade -y
 
-# 2. Install essential codecs (if skipped during setup)
-sudo apt install ubuntu-restricted-extras -y
+# Update system packages (Fedora)
+sudo dnf upgrade -y
+
+# Update system packages (Arch Linux)
+sudo pacman -Syu
 ```

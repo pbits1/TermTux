@@ -2,6 +2,15 @@
 const sections = [
   {
     id: 1,
+    title: "Getting Started",
+    description: "First steps to choosing a distribution and installing Linux.",
+    icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>`,
+    categories: [
+      { id: 59, file: "59-linux-installation.md", title: "Linux Installation Guide", description: "Step-by-step guide to choosing a distro and installing Linux (Dual boot, UEFI, partitioning).", tags: ["install", "ubuntu", "distros", "dual-boot", "partition", "uefi", "bios", "usb"] }
+    ]
+  },
+  {
+    id: 2,
     title: "System Logs & Admin",
     description: "Core commands for system administration and logging.",
     icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>`,
@@ -22,7 +31,7 @@ const sections = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     title: "Essential Beginner Commands",
     description: "Navigation, file operations, and basics.",
     icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>`,
@@ -48,7 +57,7 @@ const sections = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     title: "Software Installation Guides",
     description: "Install popular apps like VS Code, Chrome, and Discord.",
     icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>`,
@@ -73,7 +82,7 @@ const sections = [
     ]
   },
   {
-    id: 4,
+    id: 5,
     title: "Developer Tools",
     description: "Python, Node.js, Git, Docker, and Java.",
     icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>`,
@@ -86,7 +95,7 @@ const sections = [
     ]
   },
   {
-    id: 5,
+    id: 6,
     title: "Deep Dive Explanations",
     description: "Understanding how Linux actually works.",
     icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
@@ -95,8 +104,7 @@ const sections = [
       { id: 55, file: "55-apt-explained.md", title: "APT Package Manager", description: "Deep dive into how APT finds, downloads, and installs packages.", tags: ["apt", "package-manager", "repositories", "deep-dive"] },
       { id: 56, file: "56-piping-redirection.md", title: "Piping & Redirection", description: "Master the pipe operator, input/output redirection, and command chaining.", tags: ["pipe", "redirection", "stdin", "stdout", "deep-dive"] },
       { id: 57, file: "57-common-problems.md", title: "Common Problems & Fixes", description: "Solutions for the most common Ubuntu/Linux problems.", tags: ["problems", "fixes", "troubleshooting", "errors", "deep-dive"] },
-      { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] },
-      { id: 59, file: "59-linux-installation.md", title: "Ubuntu Installation Guide", description: "Step-by-step guide to installing Ubuntu Linux (Dual boot, UEFI, partitioning).", tags: ["install", "ubuntu", "dual-boot", "partition", "uefi", "bios", "usb", "bootloader"] }
+      { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] }
     ]
   }
 ];
