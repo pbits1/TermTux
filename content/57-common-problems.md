@@ -169,3 +169,23 @@ sudo mount /dev/sdb1 /mnt
 # Or with verbose output
 app-name --verbose
 ```
+
+---
+
+## Hide GRUB Boot Menu (Skip boot delay)
+
+**Problem:** GRUB boot menu waits for 5 to 10 seconds every time you turn on your PC. If Linux is your only operating system, you can skip this delay completely and boot straight into the desktop.
+
+```bash
+# 1. Set GRUB timeout delay to 0 seconds
+sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub
+
+# 2. Configure GRUB to hide the menu
+sudo sed -i 's/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=hidden/' /etc/default/grub
+
+# 3. Apply changes and rebuild boot configuration
+sudo update-grub
+```
+
+> **💡 Tip:** If you ever need to show the GRUB menu in the future (e.g. to access recovery options), hold down the **Shift** key (on older BIOS systems) or tap the **Esc** key repeatedly (on modern UEFI systems) immediately after turning on your computer.
+
