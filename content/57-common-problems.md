@@ -68,8 +68,11 @@ sudo apt --fix-broken install
 
 **Cause:** Another program is using apt (Software Updater, etc.)
 
+> [!CAUTION]
+> Force-removing lock files can corrupt your package database if a software update is actively writing data in the background. Only run these commands if the system is hung and you are certain no other updater is active.
+
 ```bash
-# Fix: Wait for it to finish, or force it:
+# Force unlock:
 sudo killall apt apt-get
 sudo rm /var/lib/dpkg/lock-frontend
 sudo dpkg --configure -a

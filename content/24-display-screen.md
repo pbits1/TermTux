@@ -1,44 +1,82 @@
 ---
 title: "Display & Screen"
-section: 2
+section: 3
 category: 24
 description: "Manage display resolution, brightness, and screen settings."
 icon: "monitor"
-tags: ['display', 'screen', 'resolution', 'brightness', 'xrandr']
+tags: ["display", "screen", "resolution", "brightness", "xrandr", "beginner"]
 ---
 
 # Display & Screen
+
+Configure monitor resolutions, open files/URLs in default apps, and capture screenshots.
+
+---
+
+## 1. List Display Outputs
+
+View all connected monitors, default outputs, and supported resolutions.
 
 ```bash
 xrandr
 ```
 
-→ List displays and available resolutions.
+---
 
+## 2. Set Monitor Resolution
+
+Change the resolution of a specific display output (e.g., HDMI-1).
 
 ```bash
 xrandr --output HDMI-1 --mode 1920x1080
 ```
 
-→ Set resolution for a specific display.
+---
 
+## 3. Open Files with Default Apps
 
+Open a document or image with its registered system default application (like double-clicking it).
+
+```bash
 xdg-open file.pdf
-→ Open any file with its default application (like double-clicking).
+```
 
+---
 
+## 4. Open URLs in Web Browser
+
+Launch your default web browser and open a specific website link.
+
+```bash
 xdg-open https://google.com
-→ Open a URL in the default browser.
+```
 
+---
 
+## 5. Capture Screenshots
+
+Take a screenshot of the entire desktop screen.
+
+```bash
 gnome-screenshot
-→ Take a screenshot (saved to Pictures).
+```
 
+---
 
+## 6. Screenshot Selected Area
+
+Interactively select a specific region of the screen to screenshot.
+
+```bash
 gnome-screenshot -a
-→ Take a screenshot of a selected area.
+```
 
+---
 
+## 7. Simulate Keyboard Keys
+
+Programmatically trigger keyboard presses (e.g., simulate the Print Screen key).
+
+```bash
 xdotool key Print
-→ Simulate pressing the Print Screen key.
-
+```

@@ -91,7 +91,7 @@ Show logs within a specific time range.
 
 ```bash
 # Example: Show logs from a specific date range
-journalctl --since "2026-07-09 10:00" --until "2026-07-09 14:00"
+journalctl --since "2026-01-01 10:00" --until "2026-01-01 14:00"
 ```
 
 ---
