@@ -34,22 +34,13 @@ function init() {
 function renderSidebar() {
   if (!sidebarNav) return;
   
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const categoryIndex = pathParts.findIndex(part => part.toLowerCase().includes('category'));
-  
-  let activeSlug = null;
-  if (categoryIndex !== -1 && pathParts[categoryIndex + 1]) {
-    activeSlug = pathParts[categoryIndex + 1];
-  } else {
-    activeSlug = window.location.hash.substring(1);
-  }
+  const hash = window.location.hash.substring(1);
+  const activeId = parseInt(hash);
   
   let html = '';
   sections.forEach(section => {
-    // Check if this section contains the currently active category (slug or id match)
-    const hasActiveCategory = activeSlug && section.categories.some(cat => 
-      cat.slug === activeSlug || cat.id.toString() === activeSlug
-    );
+    // Check if this section contains the currently active category
+    const hasActiveCategory = activeId && section.categories.some(cat => cat.id === activeId);
     const collapsedClass = hasActiveCategory ? '' : 'collapsed';
     const ariaExpanded = hasActiveCategory ? 'true' : 'false';
 
@@ -63,10 +54,8 @@ function renderSidebar() {
     `;
     
     section.categories.forEach(cat => {
-      // Use standard hash URLs locally on file protocol, and clean URL paths on dev/prod servers
-      const targetUrl = window.location.protocol === 'file:' ? `category.html#${cat.slug}` : `/category/${cat.slug}`;
       html += `
-        <a href="${targetUrl}" class="nav-item" data-slug="${cat.slug}" data-id="${cat.id}">
+        <a href="category.html#${cat.id}" class="nav-item" data-id="${cat.id}">
           <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           ${cat.title}
         </a>
@@ -79,10 +68,9 @@ function renderSidebar() {
   sidebarNav.innerHTML = html;
   
   // Highlight active item
-  if (activeSlug) {
+  if (hash) {
     try {
-      const activeItem = sidebarNav.querySelector(`[data-slug="${escapeSelector(activeSlug)}"]`) || 
-                         sidebarNav.querySelector(`[data-id="${escapeSelector(activeSlug)}"]`);
+      const activeItem = sidebarNav.querySelector(`[data-id="${escapeSelector(hash)}"]`);
       if (activeItem) {
         activeItem.classList.add('active');
         activeItem.scrollIntoView({ block: 'center' });
@@ -97,19 +85,10 @@ function renderSidebar() {
 async function handleRouting() {
   if (!window.location.pathname.includes('category')) return;
   
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const categoryIndex = pathParts.findIndex(part => part.toLowerCase().includes('category'));
-  
-  let slug = null;
-  if (categoryIndex !== -1 && pathParts[categoryIndex + 1]) {
-    slug = pathParts[categoryIndex + 1];
-  } else {
-    slug = window.location.hash.substring(1);
-  }
-  
-  const homeTarget = window.location.protocol === 'file:' ? 'index.html' : '/';
-  if (!slug) {
-    window.location.href = homeTarget;
+  const rawHash = window.location.hash.substring(1);
+  const id = parseInt(rawHash);
+  if (!id || isNaN(id)) {
+    window.location.href = 'index.html';
     return;
   }
   
@@ -118,7 +97,7 @@ async function handleRouting() {
   let section = null;
   
   for (const s of sections) {
-    const cat = s.categories.find(c => c.slug === slug || c.id.toString() === slug);
+    const cat = s.categories.find(c => c.id === id);
     if (cat) {
       category = cat;
       section = s;
@@ -132,7 +111,7 @@ async function handleRouting() {
         <div class="empty-state-icon" aria-hidden="true">🔍</div>
         <h3>Category not found</h3>
         <p>The page you are looking for does not exist.</p>
-        <a href="${homeTarget}" class="github-link mt-md" style="display: inline-flex;">Go home</a>
+        <a href="index.html" class="github-link mt-md" style="display: inline-flex;">Go home</a>
       </div>
     `;
     return;
@@ -166,7 +145,7 @@ async function handleRouting() {
       <div class="skeleton skeleton-line" style="width: 60%"></div>
       <div class="skeleton skeleton-block"></div>
     `;
-    const response = await fetch(`/content/${category.file}`);
+    const response = await fetch(`content/${category.file}`);
     if (!response.ok) throw new Error('Network response was not ok');
     const md = await response.text();
     mainContent.innerHTML = renderMarkdown(md);
@@ -183,32 +162,18 @@ async function handleRouting() {
 
 // Event Listeners
 function setupEventListeners() {
-  // Listen to popstate event (browser back/forward navigation)
-  window.addEventListener('popstate', () => {
+  // Hash change
+  window.addEventListener('hashchange', () => {
     if (window.location.pathname.includes('category')) {
       handleRouting();
+      // Re-render sidebar to update expanded/collapsed section states
       renderSidebar();
-    }
-  });
-
-  // Intercept local category links to perform seamless SPA transitions without page reloads
-  document.addEventListener('click', (e) => {
-    const anchor = e.target.closest('a');
-    if (anchor && anchor.href && anchor.href.startsWith(window.location.origin)) {
-      const url = new URL(anchor.href);
-      // Only intercept if currently on a category page and navigating to a category page
-      if (window.location.pathname.includes('category') && url.pathname.includes('category')) {
-        e.preventDefault();
-        window.history.pushState({}, '', url.pathname);
-        handleRouting();
-        renderSidebar();
-        
-        // Auto-close sidebar on mobile navigation
-        if (sidebar && sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
-          if (sidebarOverlay) sidebarOverlay.classList.remove('active');
-          if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
-        }
+      
+      // Auto-close sidebar on mobile navigation
+      if (sidebar && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
       }
     }
   });
@@ -268,7 +233,7 @@ function setupEventListeners() {
             matchCount++;
             if (matchCount <= 10) {
               resultsHtml += `
-                <a href="/category/${c.slug}" class="search-result-item" role="option">
+                <a href="category.html#${c.id}" class="search-result-item" role="option">
                   <div class="search-result-title">${highlight(c.title, query)}</div>
                   <div class="search-result-category">${s.title} ${c.description ? `• <span style="font-size: 11px; opacity: 0.8">${highlight(c.description, query)}</span>` : ''}</div>
                 </a>

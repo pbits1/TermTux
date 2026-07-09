@@ -1,4 +1,4 @@
-const CACHE_NAME = 'termtux-cache-v3';
+const CACHE_NAME = 'termtux-cache-v4';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -50,7 +50,7 @@ self.addEventListener('fetch', (e) => {
     url.pathname === '/' || 
     url.pathname.endsWith('/') ||
     url.pathname.includes('index.html') || 
-    url.pathname.includes('category') || 
+    url.pathname.includes('category.html') || 
     url.pathname.includes('content/');
 
   if (isHtmlOrContent) {
@@ -71,7 +71,7 @@ self.addEventListener('fetch', (e) => {
           return caches.match(e.request).then((cachedResponse) => {
             if (cachedResponse) return cachedResponse;
             // Fallbacks
-            if (url.pathname.includes('category')) {
+            if (url.pathname.includes('category.html')) {
               return caches.match('./category.html');
             }
             return caches.match('./index.html') || caches.match('./404.html');
