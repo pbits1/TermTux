@@ -16,15 +16,19 @@ export function renderMarkdown(markdown) {
   // Normalize line endings
   content = content.replace(/\r\n/g, '\n');
 
-  // Process fenced code blocks FIRST (protect them from other transforms)
+  // 1. Process and extract fenced code blocks first
   const codeBlocks = [];
   content = content.replace(/```(?:bash|sh|text|python|javascript|json|yaml|html|css)?\n([\s\S]*?)```/gm, (match, code) => {
     const placeholder = `%%CODEBLOCK_${codeBlocks.length}%%`;
-    codeBlocks.push(code.trim());
+    // Pre-escape code block contents
+    codeBlocks.push(escapeHTML(code.trim()));
     return placeholder;
   });
 
-  // Convert ASCII box-drawing tables to HTML tables
+  // 2. Escape HTML in the remaining markdown body
+  content = escapeHTML(content);
+
+  // 3. Convert ASCII box-drawing tables to HTML tables
   content = content.replace(/((?:.*[┌┬┐├┼┤└┴┘│─╔╦╗╠╬╣╚╩╝║═].*\n?)+)/gm, (match) => {
     const lines = match.trim().split('\n');
     const dataRows = lines.filter(line => line.includes('│') && !line.match(/[┌┬┐├┼┤└┴┘─]/));
@@ -40,11 +44,11 @@ export function renderMarkdown(markdown) {
 
       html += '<tr>';
       cells.forEach(cell => {
-        const safeCell = escapeHTML(cell);
+        // Already escaped, inject directly
         if (isFirstDataRow) {
-          html += `<th>${safeCell}</th>`;
+          html += `<th>${cell}</th>`;
         } else {
-          html += `<td>${safeCell}</td>`;
+          html += `<td>${cell}</td>`;
         }
       });
       html += '</tr>';
@@ -55,7 +59,7 @@ export function renderMarkdown(markdown) {
     return html;
   });
 
-  // Convert markdown pipe tables to HTML tables
+  // 4. Convert markdown pipe tables to HTML tables
   content = content.replace(/((?:\|.*\|\n)+)/gm, (match) => {
     const rows = match.trim().split('\n');
     if (rows.length < 2) return match;
@@ -68,11 +72,12 @@ export function renderMarkdown(markdown) {
 
       html += '<tr>';
       cells.forEach(cell => {
-        const safeCell = escapeHTML(cell.trim());
+        // Already escaped, inject directly
+        const cleanCell = cell.trim();
         if (index === 0) {
-          html += `<th>${safeCell}</th>`;
+          html += `<th>${cleanCell}</th>`;
         } else {
-          html += `<td>${safeCell}</td>`;
+          html += `<td>${cleanCell}</td>`;
         }
       });
       html += '</tr>';
@@ -81,61 +86,50 @@ export function renderMarkdown(markdown) {
     return html;
   });
 
-  // Render headers safely (must be at start of line)
-  content = content.replace(/^#### (.*$)/gim, (m, g) => `<h4>${escapeHTML(g)}</h4>`);
-  content = content.replace(/^### (.*$)/gim, (m, g) => `<h3>${escapeHTML(g)}</h3>`);
-  content = content.replace(/^## (.*$)/gim, (m, g) => `<h2>${escapeHTML(g)}</h2>`);
-  content = content.replace(/^# (.*$)/gim, (m, g) => `<h1>${escapeHTML(g)}</h1>`);
+  // 5. Render markdown blocks (headers, blockquotes, lists, links, emphasis)
+  // Since content is already escaped, we just wrap them in their respective tags directly.
+  content = content.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+  content = content.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+  content = content.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+  content = content.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
-  // Render blockquotes safely
-  content = content.replace(/^> (.*$)/gim, (m, g) => `<blockquote>${escapeHTML(g)}</blockquote>`);
-  // Merge consecutive blockquotes
+  content = content.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
   content = content.replace(/<\/blockquote>\n<blockquote>/g, '\n');
 
-  // Render horizontal rules
   content = content.replace(/^---$/gm, '<hr>');
 
-  // Render bold (safe since it only processes non-HTML content)
   content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-  // Render italic
   content = content.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-  // Render inline code (but not inside code blocks)
-  content = content.replace(/`([^`]+)`/g, (m, g) => `<code>${escapeHTML(g)}</code>`);
+  // Render inline code safely
+  content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
 
-  // Render unordered lists
-  content = content.replace(/^(\s*)[-*] (.*$)/gim, (m, spaces, text) => {
-    return `${spaces}<li>${escapeHTML(text)}</li>`;
-  });
-
-  // Wrap consecutive <li> in <ul>
+  // Render lists
+  content = content.replace(/^(\s*)[-*] (.*$)/gim, '$1<li>$2</li>');
   content = content.replace(/((?:<li>.*<\/li>\n?)+)/gm, '<ul>$1</ul>');
 
-  // Render links safely (validate URL protocol)
+  // Render links
   content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
     const cleanUrl = url.trim();
+    // Validate protocol
     if (cleanUrl.toLowerCase().startsWith('javascript:') || cleanUrl.toLowerCase().startsWith('data:')) {
-      return escapeHTML(text);
+      return text;
     }
-    return `<a href="${escapeHTML(cleanUrl)}" target="_blank" rel="noopener noreferrer">${escapeHTML(text)}</a>`;
+    return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`;
   });
 
-  // Render paragraphs — split by double newlines
+  // Render paragraphs
   const blocks = content.split('\n\n');
   content = blocks.map(block => {
     const trimmed = block.trim();
     if (!trimmed) return '';
-    // Don't wrap HTML elements or code block placeholders in <p>
     if (trimmed.startsWith('<') || trimmed.startsWith('%%CODEBLOCK_')) return trimmed;
-    // Otherwise wrap it (after escaping any unescaped tags)
     return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
   }).join('\n');
 
-  // Restore code blocks with styled terminal UI
+  // 6. Restore fenced code blocks with terminal styling
   content = content.replace(/%%CODEBLOCK_(\d+)%%/g, (match, index) => {
-    const code = codeBlocks[parseInt(index)];
-    const escapedCode = escapeHTML(code);
+    const escapedCode = codeBlocks[parseInt(index)];
 
     return `<div class="command-block">
               <div class="command-block-header">
@@ -169,7 +163,6 @@ window.copyToClipboard = function(btn) {
     }, 2000);
   }).catch(err => {
     console.error('Failed to copy text: ', err);
-    // Visual fallback
     const span = btn.querySelector('span');
     span.innerText = 'Failed';
     setTimeout(() => {
