@@ -53,7 +53,9 @@ const sections = [
       { id: 28, file: "28-terminal-shortcuts.md", title: "Terminal Shortcuts", description: "Essential keyboard shortcuts for the terminal.", tags: ["shortcuts", "keyboard", "terminal", "hotkeys"] },
       { id: 29, file: "29-gnome-shortcuts.md", title: "GNOME Shortcuts", description: "Essential keyboard shortcuts for the GNOME desktop.", tags: ["shortcuts", "keyboard", "gnome", "desktop", "hotkeys"] },
       { id: 30, file: "30-windows-linux-cheatsheet.md", title: "Windows → Linux Cheat Sheet", description: "Find Linux equivalents for common Windows commands and actions.", tags: ["windows", "linux", "translation", "cheatsheet", "migration"] },
-      { id: 31, file: "31-useful-tools.md", title: "Useful Tools to Install", description: "Recommended tools to enhance your Ubuntu experience.", tags: ["tools", "utilities", "recommended", "install"] }
+      { id: 31, file: "31-useful-tools.md", title: "Useful Tools to Install", description: "Recommended tools to enhance your Ubuntu experience.", tags: ["tools", "utilities", "recommended", "install"] },
+      { id: 61, file: "61-ssh-configuration.md", title: "SSH & Remote Access", description: "Generate SSH keys, use passwordless logins, configure server shortcuts, and secure remote access.", tags: ["ssh", "remote", "keys", "security", "ssh-config", "beginner"] },
+      { id: 62, file: "62-terminal-customization.md", title: "Terminal Customisation", description: "Swap shell to Zsh, install Oh My Zsh, add code-highlighting plugins, and style your prompt with Starship.", tags: ["zsh", "oh-my-zsh", "starship", "theme", "terminal", "customize", "beginner"] }
     ]
   },
   {
@@ -104,7 +106,8 @@ const sections = [
       { id: 55, file: "55-apt-explained.md", title: "APT Package Manager", description: "Deep dive into how APT finds, downloads, and installs packages.", tags: ["apt", "package-manager", "repositories", "deep-dive"] },
       { id: 56, file: "56-piping-redirection.md", title: "Piping & Redirection", description: "Master the pipe operator, input/output redirection, and command chaining.", tags: ["pipe", "redirection", "stdin", "stdout", "deep-dive"] },
       { id: 57, file: "57-common-problems.md", title: "Common Problems & Fixes", description: "Solutions for the most common Ubuntu/Linux problems.", tags: ["problems", "fixes", "troubleshooting", "errors", "deep-dive"] },
-      { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] }
+      { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] },
+      { id: 60, file: "60-bash-scripting.md", title: "Bash Scripting Basics", description: "Learn to write automation scripts, use variables, loops, conditionals, and write your first .sh script.", tags: ["bash", "scripting", "automation", "variables", "loops", "if-else", "sh", "developer"] }
     ]
   }
 ];
