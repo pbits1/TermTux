@@ -139,6 +139,7 @@
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
+  text-align: left;
   cursor: pointer;
   user-select: none;
   transition: color var(--transition-fast);
