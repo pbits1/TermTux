@@ -76,7 +76,7 @@ function renderSidebar() {
 
 // Handle Routing
 async function handleRouting() {
-  if (!window.location.pathname.includes('category.html')) return;
+  if (!window.location.pathname.includes('category')) return;
   
   const rawHash = window.location.hash.substring(1);
   const id = parseInt(rawHash);
@@ -157,7 +157,7 @@ async function handleRouting() {
 function setupEventListeners() {
   // Hash change
   window.addEventListener('hashchange', () => {
-    if (window.location.pathname.includes('category.html')) {
+    if (window.location.pathname.includes('category')) {
       handleRouting();
       // Update sidebar active state
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
