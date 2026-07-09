@@ -1,0 +1,159 @@
+/* ============================================================
+   YARU DESIGN TOKENS
+   Ubuntu's official design language — colors, fonts, spacing
+   ============================================================ */
+
+/* --- Google Fonts Import (Ubuntu font family) --- */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Ubuntu+Mono:wght@400;700&display=swap');
+
+:root {
+  /* ─── Primary Colors ─── */
+  --yaru-orange:          #E95420;
+  --yaru-orange-light:    #F47B52;
+  --yaru-orange-dark:     #C7360A;
+  --yaru-aubergine:       #2C001E;
+  --yaru-aubergine-light: #5E2750;
+  --yaru-canonical-purple:#77216F;
+  --yaru-warm-grey:       #AEA79F;
+  --yaru-cool-grey:       #333333;
+
+  /* ─── Light Theme ─── */
+  --bg-primary:           #FAFAFA;
+  --bg-secondary:         #F2F2F2;
+  --bg-tertiary:          #FFFFFF;
+  --bg-card:              #FFFFFF;
+  --bg-code:              #2D2D2D;
+  --bg-sidebar:           #F7F7F7;
+  --bg-hover:             rgba(233, 84, 32, 0.06);
+  --bg-active:            rgba(233, 84, 32, 0.12);
+  --bg-badge:             rgba(233, 84, 32, 0.10);
+  --bg-search:            #FFFFFF;
+  --bg-overlay:           rgba(44, 0, 30, 0.5);
+
+  --text-primary:         #111111;
+  --text-secondary:       #555555;
+  --text-tertiary:        #888888;
+  --text-inverse:         #FFFFFF;
+  --text-code:            #D4D4D4;
+  --text-link:            #E95420;
+  --text-link-hover:      #C7360A;
+
+  --border-color:         #E0E0E0;
+  --border-light:         #EEEEEE;
+  --border-focus:         #E95420;
+
+  --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md:            0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg:            0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glow:          0 0 20px rgba(233, 84, 32, 0.15);
+
+  /* ─── Code Theme (terminal look) ─── */
+  --code-bg:              #1E1E2E;
+  --code-text:            #CDD6F4;
+  --code-comment:         #6C7086;
+  --code-keyword:         #CBA6F7;
+  --code-string:          #A6E3A1;
+  --code-command:         #89B4FA;
+  --code-prompt:          #A6E3A1;
+  --code-flag:            #F9E2AF;
+  --code-border:          #313244;
+  --code-line-highlight:  rgba(137, 180, 250, 0.08);
+  --code-scrollbar:       #45475A;
+  --code-copy-bg:         rgba(205, 214, 244, 0.1);
+  --code-copy-hover:      rgba(205, 214, 244, 0.2);
+
+  /* ─── Typography ─── */
+  --font-family:          'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:            'Ubuntu Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+
+  --font-size-xs:         0.75rem;    /* 12px */
+  --font-size-sm:         0.8125rem;  /* 13px */
+  --font-size-base:       0.9375rem;  /* 15px */
+  --font-size-md:         1.0625rem;  /* 17px */
+  --font-size-lg:         1.25rem;    /* 20px */
+  --font-size-xl:         1.5rem;     /* 24px */
+  --font-size-2xl:        2rem;       /* 32px */
+  --font-size-3xl:        2.5rem;     /* 40px */
+  --font-size-4xl:        3rem;       /* 48px */
+
+  --font-weight-light:    300;
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-bold:     700;
+
+  --line-height-tight:    1.25;
+  --line-height-normal:   1.6;
+  --line-height-relaxed:  1.8;
+
+  /* ─── Spacing ─── */
+  --space-xs:             0.25rem;   /* 4px */
+  --space-sm:             0.5rem;    /* 8px */
+  --space-md:             1rem;      /* 16px */
+  --space-lg:             1.5rem;    /* 24px */
+  --space-xl:             2rem;      /* 32px */
+  --space-2xl:            3rem;      /* 48px */
+  --space-3xl:            4rem;      /* 64px */
+
+  /* ─── Border Radius (Yaru style — rounded) ─── */
+  --radius-sm:            6px;
+  --radius-md:            10px;
+  --radius-lg:            16px;
+  --radius-xl:            24px;
+  --radius-full:          9999px;
+
+  /* ─── Transitions ─── */
+  --transition-fast:      150ms ease;
+  --transition-normal:    250ms ease;
+  --transition-slow:      400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring:    500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ─── Z-Index Scale ─── */
+  --z-base:               1;
+  --z-dropdown:           100;
+  --z-sticky:             200;
+  --z-overlay:            300;
+  --z-modal:              400;
+  --z-toast:              500;
+
+  /* ─── Layout ─── */
+  --sidebar-width:        280px;
+  --sidebar-collapsed:    0px;
+  --header-height:        64px;
+  --max-content-width:    900px;
+  --content-padding:      var(--space-xl);
+}
+
+/* ─── Dark Theme ─── */
+[data-theme="dark"] {
+  --bg-primary:           #1A1A2E;
+  --bg-secondary:         #16213E;
+  --bg-tertiary:          #1E1E32;
+  --bg-card:              #222240;
+  --bg-code:              #0F0F1A;
+  --bg-sidebar:           #141428;
+  --bg-hover:             rgba(233, 84, 32, 0.10);
+  --bg-active:            rgba(233, 84, 32, 0.18);
+  --bg-badge:             rgba(233, 84, 32, 0.15);
+  --bg-search:            #222240;
+  --bg-overlay:           rgba(10, 10, 20, 0.7);
+
+  --text-primary:         #E8E8F0;
+  --text-secondary:       #A0A0B8;
+  --text-tertiary:        #6E6E88;
+  --text-inverse:         #111111;
+  --text-code:            #CDD6F4;
+  --text-link:            #F47B52;
+  --text-link-hover:      #E95420;
+
+  --border-color:         #2A2A44;
+  --border-light:         #222240;
+  --border-focus:         #E95420;
+
+  --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md:            0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg:            0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glow:          0 0 30px rgba(233, 84, 32, 0.2);
+
+  --code-bg:              #0D0D1A;
+  --code-border:          #1E1E32;
+}
