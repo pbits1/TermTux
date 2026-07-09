@@ -113,6 +113,15 @@
 
   <script type="module" src="js/app.js"></script>
   <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registered.'))
+          .catch(err => console.error('Service Worker registration failed:', err));
+      });
+    }
+  </script>
+  <script>
     // Handle Enter key for sidebar header accessibility
     document.querySelector('.sidebar-header').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {

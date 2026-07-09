@@ -28,11 +28,8 @@ sudo apt --fix-broken install
 ## METHOD 2 — Via Extracted AppImage/Binary
 
 ```bash
-# Your Antigravity is installed at:
-/home/parth-s/Antigravity-x64/antigravity
-
-# To run it:
-/home/parth-s/Antigravity-x64/antigravity --no-sandbox
+# Run the extracted binary from your terminal:
+~/Antigravity-x64/antigravity --no-sandbox
 ```
 
 > **💡 Tip:** To create a desktop shortcut, create a `.desktop` file — see Section 12 for the `.desktop` file format.

@@ -19,7 +19,7 @@ tags: ['windows', 'linux', 'translation', 'cheatsheet', 'migration']
 | Task Scheduler | cron / systemd timers |
 | .exe installer | .deb package / apt install |
 | Registry Editor | gsettings / dconf-editor |
-| C:\Users\You | /home/parth-s |
+| C:\Users\You | /home/username |
 | C:\Program Files | /usr/bin or /opt |
 | Recycle Bin | ~/.local/share/Trash |
 | Device Manager | lspci / lsusb / lshw |

@@ -19,9 +19,9 @@ In Windows, you have C:\, D:\, E:\ drives. In Linux, **EVERYTHING** is under one
 | --- | --- |
 | `/` | Root of the entire filesystem (like C:\) |
 | `/home/` | All user folders (like C:\Users) |
-| `/home/parth-s/` | YOUR personal folder (Desktop, Documents, Downloads, etc.) |
-| `/home/parth-s/.config/` | Hidden app settings (starts with `.`) |
-| `/home/parth-s/.bashrc` | Your terminal configuration |
+| `/home/username/` | YOUR personal folder (Desktop, Documents, Downloads, etc.) |
+| `/home/username/.config/` | Hidden app settings (starts with `.`) |
+| `/home/username/.bashrc` | Your terminal configuration |
 | `/etc/` | System configuration files (like Windows Registry, but readable text files) |
 | `/usr/` | User programs and libraries |
 | `/usr/bin/` | Installed program executables |

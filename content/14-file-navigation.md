@@ -35,7 +35,7 @@ cd /path/to/folder
 
 ## `cd ~`
 
-Go to your Home folder (same as `cd /home/parth-s`).
+Go to your Home folder (same as `cd /home/username`).
 
 ```bash
 cd ~
