@@ -40,9 +40,11 @@ git status
 
 
 ```bash
-# Stage changes (prepare to save):
-git add .                   → Stage ALL changed files
-git add filename.py         → Stage one specific file
+# Stage ALL changed files:
+git add .
+
+# Stage one specific file:
+git add filename.py
 ```
 
 

@@ -42,6 +42,12 @@
   --border-light:         #EEEEEE;
   --border-focus:         #E95420;
 
+  --color-warning:        #F59E0B;
+  --bg-warning:           rgba(245, 158, 11, 0.08);
+  --color-danger:         #EF4444;
+  --bg-danger:            rgba(239, 68, 68, 0.08);
+  --bg-badge-purple:      rgba(119, 33, 111, 0.1);
+
   --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md:            0 4px 12px rgba(0, 0, 0, 0.08);
   --shadow-lg:            0 8px 32px rgba(0, 0, 0, 0.12);
@@ -148,6 +154,12 @@
   --border-color:         #2A2A44;
   --border-light:         #222240;
   --border-focus:         #E95420;
+
+  --color-warning:        #FBBF24;
+  --bg-warning:           rgba(251, 191, 36, 0.12);
+  --color-danger:         #F87171;
+  --bg-danger:            rgba(248, 113, 113, 0.12);
+  --bg-badge-purple:      rgba(119, 33, 111, 0.2);
 
   --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.2);
   --shadow-md:            0 4px 12px rgba(0, 0, 0, 0.3);

@@ -42,21 +42,20 @@ docker run hello-world
 
 ```bash
 # Common Docker commands:
-docker ps                     → List running containers
-docker ps -a                  → List ALL containers (including stopped)
-docker images                 → List downloaded images
-docker pull image_name        → Download an image
-docker run -d -p 8080:80 nginx  → Run nginx web server in background
-docker stop container_id      → Stop a container
-docker rm container_id        → Remove a container
-docker rmi image_name         → Remove an image
+docker ps                     # List running containers
+docker ps -a                  # List ALL containers (including stopped)
+docker images                 # List downloaded images
+docker pull image_name        # Download an image
+docker run -d -p 8080:80 nginx  # Run nginx web server in background
+docker stop container_id      # Stop a container
+docker rm container_id        # Remove a container
+docker rmi image_name         # Remove an image
 ```
 
 
 ```bash
 # Docker Compose (run multi-container apps):
 sudo apt install docker-compose
-docker-compose up -d          → Start all services defined in docker-compose.yml
-docker-compose down           → Stop all services
+docker-compose up -d          # Start all services defined in docker-compose.yml
+docker-compose down           # Stop all services
 ```
-

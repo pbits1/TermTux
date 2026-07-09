@@ -30,6 +30,15 @@ body {
   transition: background var(--transition-normal), color var(--transition-normal);
 }
 
+/* ─── Global Focus Indicator ─── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
 /* ─── App Shell ─── */
 .app-shell {
   display: flex;
@@ -43,11 +52,12 @@ body {
   left: 0;
   width: var(--sidebar-width);
   height: 100vh;
+  height: 100dvh;
   background: var(--bg-sidebar);
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  z-index: var(--z-sticky);
+  z-index: 300;
   transition: transform var(--transition-slow), box-shadow var(--transition-normal);
   overflow: hidden;
 }
@@ -130,7 +140,7 @@ body {
   height: var(--header-height);
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-color);
-  z-index: var(--z-sticky);
+  z-index: 100;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -238,7 +248,7 @@ body {
   position: fixed;
   inset: 0;
   background: var(--bg-overlay);
-  z-index: calc(var(--z-sticky) - 1);
+  z-index: 299;
   opacity: 0;
   transition: opacity var(--transition-normal);
 }
@@ -273,6 +283,10 @@ body {
 
   .page-hero {
     padding: var(--space-2xl) var(--space-md);
+  }
+
+  .search-shortcut {
+    display: none;
   }
 }
 
