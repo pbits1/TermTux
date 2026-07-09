@@ -134,8 +134,9 @@
     
     sections.forEach((section, idx) => {
       const firstCat = section.categories[0];
+      const targetUrl = window.location.protocol === 'file:' ? `category.html#${firstCat.slug}` : `/category/${firstCat.slug}`;
       html += `
-        <a href="/category/${firstCat.slug}" class="section-card fade-in-up stagger-${idx+1}">
+        <a href="${targetUrl}" class="section-card fade-in-up stagger-${idx+1}">
           <div class="section-card-icon" aria-hidden="true">${section.icon}</div>
           <h2>${section.title}</h2>
           <p>${section.description}</p>

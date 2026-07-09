@@ -35,12 +35,21 @@ function renderSidebar() {
   if (!sidebarNav) return;
   
   const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const activeSlug = pathParts[1];
+  const categoryIndex = pathParts.findIndex(part => part.toLowerCase().includes('category'));
+  
+  let activeSlug = null;
+  if (categoryIndex !== -1 && pathParts[categoryIndex + 1]) {
+    activeSlug = pathParts[categoryIndex + 1];
+  } else {
+    activeSlug = window.location.hash.substring(1);
+  }
   
   let html = '';
   sections.forEach(section => {
-    // Check if this section contains the currently active category
-    const hasActiveCategory = activeSlug && section.categories.some(cat => cat.slug === activeSlug);
+    // Check if this section contains the currently active category (slug or id match)
+    const hasActiveCategory = activeSlug && section.categories.some(cat => 
+      cat.slug === activeSlug || cat.id.toString() === activeSlug
+    );
     const collapsedClass = hasActiveCategory ? '' : 'collapsed';
     const ariaExpanded = hasActiveCategory ? 'true' : 'false';
 
@@ -54,8 +63,10 @@ function renderSidebar() {
     `;
     
     section.categories.forEach(cat => {
+      // Use standard hash URLs locally on file protocol, and clean URL paths on dev/prod servers
+      const targetUrl = window.location.protocol === 'file:' ? `category.html#${cat.slug}` : `/category/${cat.slug}`;
       html += `
-        <a href="/category/${cat.slug}" class="nav-item" data-slug="${cat.slug}">
+        <a href="${targetUrl}" class="nav-item" data-slug="${cat.slug}" data-id="${cat.id}">
           <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           ${cat.title}
         </a>
@@ -70,7 +81,8 @@ function renderSidebar() {
   // Highlight active item
   if (activeSlug) {
     try {
-      const activeItem = sidebarNav.querySelector(`[data-slug="${escapeSelector(activeSlug)}"]`);
+      const activeItem = sidebarNav.querySelector(`[data-slug="${escapeSelector(activeSlug)}"]`) || 
+                         sidebarNav.querySelector(`[data-id="${escapeSelector(activeSlug)}"]`);
       if (activeItem) {
         activeItem.classList.add('active');
         activeItem.scrollIntoView({ block: 'center' });
@@ -86,9 +98,18 @@ async function handleRouting() {
   if (!window.location.pathname.includes('category')) return;
   
   const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const slug = pathParts[1];
+  const categoryIndex = pathParts.findIndex(part => part.toLowerCase().includes('category'));
+  
+  let slug = null;
+  if (categoryIndex !== -1 && pathParts[categoryIndex + 1]) {
+    slug = pathParts[categoryIndex + 1];
+  } else {
+    slug = window.location.hash.substring(1);
+  }
+  
+  const homeTarget = window.location.protocol === 'file:' ? 'index.html' : '/';
   if (!slug) {
-    window.location.href = '/';
+    window.location.href = homeTarget;
     return;
   }
   
@@ -97,7 +118,7 @@ async function handleRouting() {
   let section = null;
   
   for (const s of sections) {
-    const cat = s.categories.find(c => c.slug === slug);
+    const cat = s.categories.find(c => c.slug === slug || c.id.toString() === slug);
     if (cat) {
       category = cat;
       section = s;
@@ -111,7 +132,7 @@ async function handleRouting() {
         <div class="empty-state-icon" aria-hidden="true">🔍</div>
         <h3>Category not found</h3>
         <p>The page you are looking for does not exist.</p>
-        <a href="/" class="github-link mt-md" style="display: inline-flex;">Go home</a>
+        <a href="${homeTarget}" class="github-link mt-md" style="display: inline-flex;">Go home</a>
       </div>
     `;
     return;

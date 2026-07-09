@@ -37,7 +37,7 @@
     
     <!-- Sidebar -->
     <aside class="sidebar" aria-label="Category navigation">
-      <div class="sidebar-header" style="cursor: pointer;" onclick="window.location.href='/'" tabindex="0" role="button" aria-label="Go to Home Page">
+      <div class="sidebar-header" style="cursor: pointer;" onclick="window.location.href = window.location.protocol === 'file:' ? 'index.html' : '/'" tabindex="0" role="button" aria-label="Go to Home Page">
         <svg class="sidebar-logo" viewBox="0 0 24 24" fill="none" stroke="var(--yaru-orange)" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path><path d="M2 12h20"></path></svg>
         <div>
           <div class="sidebar-title">TermTux</div>
