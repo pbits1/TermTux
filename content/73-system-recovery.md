@@ -1,6 +1,6 @@
 ---
 title: "System Recovery & Live USB"
-section: 3
+section: 2
 category: 73
 description: "Recover a broken system — access GRUB, use recovery mode, repair GRUB, chroot, and fix a system without reinstalling."
 icon: "alert-circle"

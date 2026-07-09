@@ -1,6 +1,6 @@
 ---
 title: "Encryption & GPG"
-section: 3
+section: 6
 category: 74
 description: "Encrypt files, sign documents, manage keys, and verify integrity using GPG, OpenSSL, and checksums."
 icon: "lock"

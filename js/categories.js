@@ -6,8 +6,7 @@ const sections = [
     description: "First steps to choosing a distribution and installing Linux.",
     icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>`,
     categories: [
-      { id: 59, file: "59-linux-installation.md", title: "Linux Installation Guide", description: "Step-by-step guide to choosing a distro and installing Linux (Dual boot, UEFI, partitioning).", tags: ["install", "ubuntu", "distros", "dual-boot", "partition", "uefi", "bios", "usb"] },
-      { id: 72, file: "72-tmux-terminal-multiplexer.md", title: "tmux — Terminal Multiplexer", description: "Manage multiple terminal sessions inside a single window with tmux — split panes, detach, and reattach.", tags: ["tmux", "terminal", "multiplexer", "sessions", "panes", "productivity"] }
+      { id: 59, file: "59-linux-installation.md", title: "Linux Installation Guide", description: "Step-by-step guide to choosing a distro and installing Linux (Dual boot, UEFI, partitioning).", tags: ["install", "ubuntu", "distros", "dual-boot", "partition", "uefi", "bios", "usb"] }
     ]
   },
   {
@@ -32,7 +31,9 @@ const sections = [
       { id: 63, file: "63-firewall-ufw.md", title: "Firewall Basics (UFW)", description: "Set up and manage Ubuntu's built-in firewall using UFW — Uncomplicated Firewall.", tags: ["firewall", "ufw", "security", "network", "ports", "beginner"] },
       { id: 66, file: "66-performance-monitoring.md", title: "Performance Monitoring", description: "Monitor CPU, memory, disk I/O, and network performance with iostat, vmstat, sar, and top.", tags: ["performance", "iostat", "vmstat", "sar", "top", "monitoring"] },
       { id: 69, file: "69-kernel-modules.md", title: "Kernel & Modules", description: "Manage Linux kernel modules, view hardware drivers, and configure kernel parameters at runtime.", tags: ["kernel", "modules", "lsmod", "modprobe", "sysctl"] },
-      { id: 71, file: "71-swap-management.md", title: "Swap Management", description: "Create, resize, monitor, and tune swap space on Linux for better memory management.", tags: ["swap", "memory", "swapfile", "swapon", "swapoff"] }
+      { id: 71, file: "71-swap-management.md", title: "Swap Management", description: "Create, resize, monitor, and tune swap space on Linux for better memory management.", tags: ["swap", "memory", "swapfile", "swapon", "swapoff"] },
+      { id: 73, file: "73-system-recovery.md", title: "System Recovery & Live USB", description: "Recover a broken system — GRUB, recovery mode, chroot, and repair without reinstalling.", tags: ["recovery", "grub", "chroot", "live-usb", "repair", "boot"] },
+      { id: 77, file: "77-audio-linux.md", title: "Audio on Linux", description: "Manage audio, troubleshoot sound, and control PulseAudio and ALSA from the terminal.", tags: ["audio", "pulseaudio", "alsa", "aplay", "pactl", "sound"] }
     ]
   },
   {
@@ -65,12 +66,7 @@ const sections = [
       { id: 65, file: "65-filesystem-storage.md", title: "Filesystem & Storage Management", description: "Create filesystems, format drives, manage partitions, and use fstab for automatic mounting.", tags: ["filesystem", "mkfs", "mount", "fstab", "partition", "fsck"] },
       { id: 67, file: "67-rsync-backups.md", title: "rsync & Data Backups", description: "Back up and synchronize files using rsync — the most powerful copying tool on Linux.", tags: ["rsync", "backup", "sync", "data", "transfer"] },
       { id: 68, file: "68-network-diagnostics.md", title: "Network Diagnostics & Tools", description: "Advanced network troubleshooting with dig, nmap, lsof, ss deep, and tcpdump.", tags: ["dig", "nmap", "tcpdump", "lsof", "network", "diagnostics"] },
-      { id: 70, file: "70-permissions-deep.md", title: "Advanced Permissions & Security", description: "Beyond chmod — umask, SUID/SGID, sticky bit, ACLs, and file system security features.", tags: ["permissions", "umask", "suid", "sgid", "sticky", "acl"] },
-      { id: 73, file: "73-system-recovery.md", title: "System Recovery & Live USB", description: "Recover a broken system — GRUB, recovery mode, chroot, and repair without reinstalling.", tags: ["recovery", "grub", "chroot", "live-usb", "repair", "boot"] },
-      { id: 74, file: "74-openssl-gpg-encryption.md", title: "Encryption & GPG", description: "Encrypt files, sign emails, manage keys, and verify integrity with GPG, OpenSSL, and checksums.", tags: ["gpg", "openssl", "encryption", "sha256", "checksum", "security"] },
-      { id: 75, file: "75-git-deep-dive.md", title: "Git Deep Dive", description: "Advanced Git workflows — branching, rebase vs merge, bisect, stashing, reflog, and submodules.", tags: ["git", "branching", "rebase", "merge", "stash", "reflog", "bisect"] },
-      { id: 76, file: "76-docker-deep-dive.md", title: "Docker Deep Dive", description: "Build images with Dockerfile, use Compose for multi-container apps, manage volumes and networks.", tags: ["docker", "compose", "dockerfile", "containers", "volumes", "networks"] },
-      { id: 77, file: "77-audio-linux.md", title: "Audio on Linux", description: "Manage audio, troubleshoot sound, and control PulseAudio and ALSA from the terminal.", tags: ["audio", "pulseaudio", "alsa", "aplay", "pactl", "sound"] }
+      { id: 72, file: "72-tmux-terminal-multiplexer.md", title: "tmux — Terminal Multiplexer", description: "Manage multiple terminal sessions inside a single window with tmux — split panes, detach, and reattach.", tags: ["tmux", "terminal", "multiplexer", "sessions", "panes", "productivity"] }
     ]
   },
   {
@@ -122,7 +118,11 @@ const sections = [
       { id: 56, file: "56-piping-redirection.md", title: "Piping & Redirection", description: "Master the pipe operator, input/output redirection, and command chaining.", tags: ["pipe", "redirection", "stdin", "stdout", "deep-dive"] },
       { id: 57, file: "57-common-problems.md", title: "Common Problems & Fixes", description: "Solutions for the most common Ubuntu/Linux problems.", tags: ["problems", "fixes", "troubleshooting", "errors", "deep-dive"] },
       { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] },
-      { id: 60, file: "60-bash-scripting.md", title: "Bash Scripting Basics", description: "Learn to write automation scripts, use variables, loops, conditionals, and write your first .sh script.", tags: ["bash", "scripting", "automation", "variables", "loops", "if-else", "sh", "developer"] }
+      { id: 60, file: "60-bash-scripting.md", title: "Bash Scripting Basics", description: "Learn to write automation scripts, use variables, loops, conditionals, and write your first .sh script.", tags: ["bash", "scripting", "automation", "variables", "loops", "if-else", "sh", "developer"] },
+      { id: 70, file: "70-permissions-deep.md", title: "Advanced Permissions & Security", description: "Beyond chmod — umask, SUID/SGID, sticky bit, ACLs, and file system security features.", tags: ["permissions", "umask", "suid", "sgid", "sticky", "acl"] },
+      { id: 74, file: "74-openssl-gpg-encryption.md", title: "Encryption & GPG", description: "Encrypt files, sign emails, manage keys, and verify integrity with GPG, OpenSSL, and checksums.", tags: ["gpg", "openssl", "encryption", "sha256", "checksum", "security"] },
+      { id: 75, file: "75-git-deep-dive.md", title: "Git Deep Dive", description: "Advanced Git workflows — branching, rebase vs merge, bisect, stashing, reflog, and submodules.", tags: ["git", "branching", "rebase", "merge", "stash", "reflog", "bisect"] },
+      { id: 76, file: "76-docker-deep-dive.md", title: "Docker Deep Dive", description: "Build images with Dockerfile, use Compose for multi-container apps, manage volumes and networks.", tags: ["docker", "compose", "dockerfile", "containers", "volumes", "networks"] }
     ]
   }
 ];

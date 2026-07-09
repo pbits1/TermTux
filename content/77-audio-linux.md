@@ -1,6 +1,6 @@
 ---
 title: "Audio on Linux"
-section: 3
+section: 2
 category: 77
 description: "Manage audio devices, troubleshoot sound, record/play audio, and control PulseAudio and ALSA from the terminal."
 icon: "volume-2"

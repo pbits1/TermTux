@@ -1,6 +1,6 @@
 ---
 title: "Docker Deep Dive"
-section: 3
+section: 6
 category: 76
 description: "Build images with Dockerfile, use docker-compose for multi-container apps, manage volumes, and optimize images."
 icon: "box"

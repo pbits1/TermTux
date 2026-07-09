@@ -1,6 +1,6 @@
 ---
 title: "tmux — Terminal Multiplexer"
-section: 1
+section: 3
 category: 72
 description: "Manage multiple terminal sessions inside a single window with tmux — split panes, detach/reattach, and never lose your work."
 icon: "layout"

@@ -1,6 +1,6 @@
 ---
 title: "Git Deep Dive"
-section: 3
+section: 6
 category: 75
 description: "Advanced Git workflows — branching strategies, rebase vs merge, git bisect, stashing, reflog, and submodules."
 icon: "git-merge"

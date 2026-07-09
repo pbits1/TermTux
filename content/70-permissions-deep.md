@@ -1,6 +1,6 @@
 ---
 title: "Advanced Permissions & Security"
-section: 3
+section: 6
 category: 70
 description: "Beyond chmod — umask, SUID/SGID, sticky bit, ACLs, and file system security features."
 icon: "shield"
