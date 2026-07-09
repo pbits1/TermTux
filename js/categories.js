@@ -95,7 +95,8 @@ const sections = [
       { id: 55, file: "55-apt-explained.md", title: "APT Package Manager", description: "Deep dive into how APT finds, downloads, and installs packages.", tags: ["apt", "package-manager", "repositories", "deep-dive"] },
       { id: 56, file: "56-piping-redirection.md", title: "Piping & Redirection", description: "Master the pipe operator, input/output redirection, and command chaining.", tags: ["pipe", "redirection", "stdin", "stdout", "deep-dive"] },
       { id: 57, file: "57-common-problems.md", title: "Common Problems & Fixes", description: "Solutions for the most common Ubuntu/Linux problems.", tags: ["problems", "fixes", "troubleshooting", "errors", "deep-dive"] },
-      { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] }
+      { id: 58, file: "58-snap-vs-flatpak.md", title: "Snap vs Flatpak vs APT vs .DEB", description: "Understand the differences between package formats and when to use each.", tags: ["snap", "flatpak", "apt", "deb", "appimage", "deep-dive"] },
+      { id: 59, file: "59-linux-installation.md", title: "Ubuntu Installation Guide", description: "Step-by-step guide to installing Ubuntu Linux (Dual boot, UEFI, partitioning).", tags: ["install", "ubuntu", "dual-boot", "partition", "uefi", "bios", "usb", "bootloader"] }
     ]
   }
 ];
