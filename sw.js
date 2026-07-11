@@ -1,4 +1,4 @@
-const CACHE_NAME = 'termtux-cache-v7';
+const CACHE_NAME = 'termtux-cache-v8';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -54,6 +54,7 @@ self.addEventListener('fetch', (e) => {
     url.pathname.endsWith('/') ||
     url.pathname.includes('index.html') || 
     url.pathname.includes('category.html') || 
+    url.pathname.includes('tools.html') || 
     url.pathname.includes('content/');
 
   if (isHtmlOrContent) {
