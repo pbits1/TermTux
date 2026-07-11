@@ -258,11 +258,18 @@ function setupEventListeners() {
       }
     });
     
-    // Search shortcut (Ctrl+K or Cmd+K)
+    // Search shortcut (Ctrl+K or Cmd+K) and Escape key handling
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         searchInput.focus();
+      }
+      if (e.key === 'Escape') {
+        if (searchResults.classList.contains('active')) {
+          searchInput.value = '';
+          searchResults.classList.remove('active');
+          searchInput.blur();
+        }
       }
     });
   }
