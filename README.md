@@ -59,11 +59,3 @@ npx http-server -p 8000
 ```
 
 Once running, open **`http://localhost:8000`** in your browser.
-
----
-
-## 🌐 Deployment & Hosting
-
-Hosted on **Cloudflare Pages** utilizing the free tier.
-* **CD Pipeline:** Pushing to the `main` branch automatically triggers Cloudflare builds.
-* **Zero Host Cost:** Because all templates, indices, sitemaps, and interactive tools run client-side, requests are served from local user caches or CDN edges, preserving bandwidth limits.
