@@ -110,8 +110,13 @@ export function renderMarkdown(markdown) {
   content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
 
   // Render lists
-  content = content.replace(/^(\s*)[-*] (.*$)/gim, '$1<li>$2</li>');
-  content = content.replace(/((?:<li>.*<\/li>\n?)+)/gm, '<ul>$1</ul>');
+  content = content.replace(/^(\s*)[-*] (.*$)/gim, (match, indent, text) => {
+    const isNested = indent && indent.length >= 2;
+    return isNested ? `<li class="nested-li" style="margin-left: 20px;">${text}</li>` : `<li>${text}</li>`;
+  });
+  content = content.replace(/((?:<li>.*?<\/li>\n?|\s*<li class="nested-li".*?<\/li>\n?)+)/gm, (match) => {
+    return `<ul>\n${match.trim()}\n</ul>\n`;
+  });
 
   // Render links
   content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
