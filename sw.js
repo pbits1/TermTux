@@ -1,9 +1,12 @@
-const CACHE_NAME = 'termtux-cache-v6';
+const CACHE_NAME = 'termtux-cache-v7';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
   './category.html',
   './404.html',
+  './tools.html',
+  './manifest.json',
+  './icon.svg',
   './css/yaru-tokens.css',
   './css/layout.css',
   './css/components.css',

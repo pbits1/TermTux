@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TermTux — Interactive Linux Command Generators</title>
+  <meta name="description" content="Generate complex Linux terminal commands interactively. chmod calculator, crontab schedule builder, and tar archiver helper.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23E95420'/><text x='50' y='68' font-size='50' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>T</text></svg>" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/yaru-tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <style>
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      margin-top: var(--space-lg);
+    }
+    @media (min-width: 1024px) {
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .span-2 {
+        grid-column: span 2;
+      }
+    }
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--yaru-orange), var(--yaru-canonical-purple));
+    }
+    .tool-header-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--bg-badge);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--yaru-orange);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .tool-title {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-bold);
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .tool-desc {
+      font-size: var(--font-size-xs);
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+    }
+    .form-group label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--bg-secondary);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--font-size-sm);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .checkbox-label input {
+      accent-color: var(--yaru-orange);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      height: 38px;
+      padding: 0 var(--space-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: var(--font-size-sm);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-family);
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--yaru-orange);
+      box-shadow: 0 0 0 2px rgba(233, 84, 32, 0.1);
+    }
+    .output-box {
+      margin-top: var(--space-sm);
+    }
+    .output-info {
+      font-size: var(--font-size-xs);
+      color: var(--text-secondary);
+      background: var(--bg-badge);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--yaru-orange);
+      margin-bottom: var(--space-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="sr-only" style="position:absolute;top:-100px;left:0;z-index:9999;background:var(--yaru-orange);color:white;padding:8px 16px;font-size:14px;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to main content</a>
+
+  <div class="app-shell">
+    
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" role="presentation"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Category navigation">
+      <div class="sidebar-header">
+        <svg class="sidebar-logo" viewBox="0 0 24 24" fill="none" stroke="var(--yaru-orange)" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path><path d="M2 12h20"></path></svg>
+        <div>
+          <div class="sidebar-title">TermTux</div>
+          <div class="sidebar-subtitle">Linux Reference</div>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav" id="sidebarNav" aria-label="Categories">
+        <!-- Rendered by app.js -->
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="https://github.com/pbits1/TermTux" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="View source on GitHub">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+          GitHub Repo
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main">
+      
+      <!-- Top Bar -->
+      <header class="top-bar" role="banner">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        
+        <div class="search-container" role="search">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input type="search" class="search-input" id="searchInput" placeholder="Search commands, tools, fixes..." aria-label="Search commands" autocomplete="off">
+          <kbd class="search-shortcut">Ctrl+K</kbd>
+          <div class="search-results" id="searchResults" role="listbox" aria-label="Search results"></div>
+        </div>
+        
+        <div style="flex: 1"></div>
+        
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+      </header>
+
+      <div class="container fade-in">
+        <!-- Hero -->
+        <section class="page-hero">
+          <h1>Interactive Linux Tools</h1>
+          <p>Generate, calculate, and construct complex shell commands accurately without visual lookups.</p>
+        </section>
+
+        <!-- Tools grid -->
+        <div class="tools-grid">
+          
+          <!-- Chmod Permission Calculator -->
+          <div class="tool-card chmod-tool span-2">
+            <div class="tool-header-block">
+              <div class="tool-icon">🔑</div>
+              <div>
+                <h2 class="tool-title">chmod Permission Calculator</h2>
+                <p class="tool-desc">Calculate file permissions using octal digits or symbolic representation codes.</p>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: var(--space-md)">
+              <div class="form-group">
+                <label>Owner (User)</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-ur" checked> Read (r - 4)</label>
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-uw" checked> Write (w - 2)</label>
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-ux" checked> Execute (x - 1)</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Group</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-gr" checked> Read (r - 4)</label>
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-gw"> Write (w - 2)</label>
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-gx" checked> Execute (x - 1)</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Public (Others)</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-or" checked> Read (r - 4)</label>
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-ow"> Write (w - 2)</label>
+                  <label class="checkbox-label"><input type="checkbox" id="chmod-ox" checked> Execute (x - 1)</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group" style="grid-column: span 3">
+                <label for="chmod-path">File or Directory Path</label>
+                <input type="text" id="chmod-path" class="form-input" value="script.sh" placeholder="e.g. script.sh, /var/www/">
+              </div>
+            </div>
+
+            <div class="output-box">
+              <div class="output-label">Permission Details</div>
+              <div class="output-info" id="chmod-info">
+                Octal: <strong>755</strong> • Symbolic: <strong>rwxr-xr-x</strong>
+              </div>
+              <div class="command-block">
+                <div class="command-block-header">
+                  <div class="command-block-dots">
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                  </div>
+                  <button class="copy-btn" id="chmod-copy" aria-label="Copy command">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span id="chmod-command">chmod 755 script.sh</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Crontab Schedule Builder -->
+          <div class="tool-card">
+            <div class="tool-header-block">
+              <div class="tool-icon">⏰</div>
+              <div>
+                <h2 class="tool-title">Crontab Schedule Builder</h2>
+                <p class="tool-desc">Generate cron automation schedules with direct human-readable translation explanation.</p>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: var(--space-md)">
+              <label for="cron-preset">Quick Presets</label>
+              <select id="cron-preset" class="form-select">
+                <option value="custom">Custom Schedule</option>
+                <option value="* * * * *">Every Minute</option>
+                <option value="0 * * * *">Hourly</option>
+                <option value="0 0 * * *">Daily at Midnight</option>
+                <option value="0 0 * * 0">Weekly on Sundays</option>
+                <option value="0 0 1 * *">Monthly on the 1st</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cron-min">Minute</label>
+                <input type="text" id="cron-min" class="form-input" value="0">
+              </div>
+              <div class="form-group">
+                <label for="cron-hour">Hour</label>
+                <input type="text" id="cron-hour" class="form-input" value="2">
+              </div>
+              <div class="form-group">
+                <label for="cron-day">Day of Month</label>
+                <input type="text" id="cron-day" class="form-input" value="*">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cron-month">Month</label>
+                <input type="text" id="cron-month" class="form-input" value="*">
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label for="cron-weekday">Day of Week</label>
+                <select id="cron-weekday" class="form-select">
+                  <option value="*">Every Day (*)</option>
+                  <option value="1-5">Weekdays (Mon-Fri)</option>
+                  <option value="0">Sunday (0)</option>
+                  <option value="6">Saturday (6)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cron-path">Script/Command to Run</label>
+              <input type="text" id="cron-path" class="form-input" value="/home/user/backup.sh">
+            </div>
+
+            <div class="output-box">
+              <div class="output-label">Cron Expression & Explanation</div>
+              <div class="output-info" id="cron-info">
+                Runs: <strong>At 02:00 AM, only on Sunday</strong>
+              </div>
+              <div class="command-block">
+                <div class="command-block-header">
+                  <div class="command-block-dots">
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                  </div>
+                  <button class="copy-btn" id="cron-copy" aria-label="Copy command">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span id="cron-command">0 2 * * 0 /home/user/backup.sh</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tar Archive Command Builder -->
+          <div class="tool-card">
+            <div class="tool-header-block">
+              <div class="tool-icon">📦</div>
+              <div>
+                <h2 class="tool-title">tar Archiver Builder</h2>
+                <p class="tool-desc">Quickly construct tar commands to compress, decompress, or inspect files and folders.</p>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: var(--space-md)">
+              <label for="tar-action">What do you want to do?</label>
+              <select id="tar-action" class="form-select">
+                <option value="compress">Create Compressed Archive</option>
+                <option value="extract">Extract Archive</option>
+                <option value="list">List Archive Contents</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="tar-format">Archive Format</label>
+              <select id="tar-format" class="form-select">
+                <option value="gz">Gzip (.tar.gz / compressed)</option>
+                <option value="bz2">Bzip2 (.tar.bz2 / high compression)</option>
+                <option value="tar">Tar (.tar / uncompressed tape archive)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="tar-name">Archive Filename</label>
+              <input type="text" id="tar-name" class="form-input" value="backup.tar.gz">
+            </div>
+
+            <div id="tar-source-group" class="form-group">
+              <label for="tar-source">Source Directory/Files</label>
+              <input type="text" id="tar-source" class="form-input" value="/var/www/html">
+            </div>
+
+            <div class="output-box">
+              <div class="output-label">Command & Flag Explanation</div>
+              <div class="output-info" id="tar-info">
+                Flags: <strong>-czvf</strong> (c: create, z: gzip, v: verbose, f: file)
+              </div>
+              <div class="command-block">
+                <div class="command-block-header">
+                  <div class="command-block-dots">
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                  </div>
+                  <button class="copy-btn" id="tar-copy" aria-label="Copy command">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span id="tar-command">tar -czvf backup.tar.gz /var/www/html</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+      <!-- Back to top -->
+      <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+      </button>
+    </main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+  <script>
+    // ─── Chmod Permission Calculator Logic ───
+    const chmodCheckboxes = [
+      'chmod-ur', 'chmod-uw', 'chmod-ux',
+      'chmod-gr', 'chmod-gw', 'chmod-gx',
+      'chmod-or', 'chmod-ow', 'chmod-ox'
+    ];
+
+    function getChmodVal() {
+      const ur = document.getElementById('chmod-ur').checked ? 4 : 0;
+      const uw = document.getElementById('chmod-uw').checked ? 2 : 0;
+      const ux = document.getElementById('chmod-ux').checked ? 1 : 0;
+      const gr = document.getElementById('chmod-gr').checked ? 4 : 0;
+      const gw = document.getElementById('chmod-gw').checked ? 2 : 0;
+      const gx = document.getElementById('chmod-gx').checked ? 1 : 0;
+      const or = document.getElementById('chmod-or').checked ? 4 : 0;
+      const ow = document.getElementById('chmod-ow').checked ? 2 : 0;
+      const ox = document.getElementById('chmod-ox').checked ? 1 : 0;
+
+      const u = ur + uw + ux;
+      const g = gr + gw + gx;
+      const o = or + ow + ox;
+
+      const uStr = (ur ? 'r' : '-') + (uw ? 'w' : '-') + (ux ? 'x' : '-');
+      const gStr = (gr ? 'r' : '-') + (gw ? 'w' : '-') + (gx ? 'x' : '-');
+      const oStr = (or ? 'r' : '-') + (ow ? 'w' : '-') + (ox ? 'x' : '-');
+
+      return {
+        octal: `${u}${g}${o}`,
+        symbolic: uStr + gStr + oStr
+      };
+    }
+
+    function updateChmod() {
+      const res = getChmodVal();
+      const pathVal = document.getElementById('chmod-path').value.trim() || 'script.sh';
+      document.getElementById('chmod-info').innerHTML = `Octal: <strong>${res.octal}</strong> • Symbolic: <strong>${res.symbolic}</strong>`;
+      document.getElementById('chmod-command').textContent = `chmod ${res.octal} ${pathVal}`;
+    }
+
+    chmodCheckboxes.forEach(id => {
+      document.getElementById(id).addEventListener('change', updateChmod);
+    });
+    document.getElementById('chmod-path').addEventListener('input', updateChmod);
+
+    // ─── Crontab Builder Logic ───
+    const cronFields = ['cron-min', 'cron-hour', 'cron-day', 'cron-month', 'cron-weekday', 'cron-path'];
+    
+    function parseCronExplain(m, h, dom, mon, dow) {
+      if (m === '*' && h === '*' && dom === '*' && mon === '*' && dow === '*') {
+        return 'Runs every single minute';
+      }
+      
+      let explain = 'Runs: ';
+      
+      // Time parse
+      if (m === '0' && h === '0') {
+        explain += 'Daily at Midnight';
+      } else if (m === '0' && h === '*') {
+        explain += 'Hourly at minute 0';
+      } else if (m.startsWith('*/')) {
+        explain += `Every ${m.substring(2)} minutes`;
+      } else {
+        const minStr = m.padStart(2, '0');
+        const hr = parseInt(h);
+        if (!isNaN(hr)) {
+          const ampm = hr >= 12 ? 'PM' : 'AM';
+          const hr12 = (hr % 12 || 12).toString().padStart(2, '0');
+          explain += `At ${hr12}:${minStr} ${ampm}`;
+        } else {
+          explain += `At minute ${m} of every hour`;
+        }
+      }
+
+      // Weekday parse
+      if (dow === '1-5') {
+        explain += ', Monday through Friday';
+      } else if (dow === '0' || dow === '7') {
+        explain += ', only on Sunday';
+      } else if (dow === '6') {
+        explain += ', only on Saturday';
+      } else if (dow !== '*') {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        explain += `, only on ${days[parseInt(dow)] || 'specified weekdays'}`;
+      } else {
+        explain += ', every day';
+      }
+
+      // Day of month / Month overrides
+      if (dom !== '*') {
+        explain += ` on day ${dom} of the month`;
+      }
+      if (mon !== '*') {
+        const months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        explain += ` in ${months[parseInt(mon)] || 'specified months'}`;
+      }
+
+      return explain;
+    }
+
+    function updateCrontab() {
+      const m = document.getElementById('cron-min').value.trim() || '*';
+      const h = document.getElementById('cron-hour').value.trim() || '*';
+      const dom = document.getElementById('cron-day').value.trim() || '*';
+      const mon = document.getElementById('cron-month').value.trim() || '*';
+      const dow = document.getElementById('cron-weekday').value;
+      const pathVal = document.getElementById('cron-path').value.trim() || '/home/user/backup.sh';
+
+      const exp = `${m} ${h} ${dom} ${mon} ${dow}`;
+      document.getElementById('cron-info').innerHTML = parseCronExplain(m, h, dom, mon, dow);
+      document.getElementById('cron-command').textContent = `${exp} ${pathVal}`;
+    }
+
+    document.getElementById('cron-preset').addEventListener('change', (e) => {
+      const val = e.target.value;
+      if (val !== 'custom') {
+        const parts = val.split(' ');
+        document.getElementById('cron-min').value = parts[0];
+        document.getElementById('cron-hour').value = parts[1];
+        document.getElementById('cron-day').value = parts[2];
+        document.getElementById('cron-month').value = parts[3];
+        document.getElementById('cron-weekday').value = parts[4];
+        updateCrontab();
+      }
+    });
+
+    cronFields.forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        document.getElementById('cron-preset').value = 'custom';
+        updateCrontab();
+      });
+      if (document.getElementById(id).tagName === 'SELECT') {
+        document.getElementById(id).addEventListener('change', () => {
+          document.getElementById('cron-preset').value = 'custom';
+          updateCrontab();
+        });
+      }
+    });
+
+    // ─── Tar Command Builder Logic ───
+    const tarFields = ['tar-action', 'tar-format', 'tar-name', 'tar-source'];
+
+    function updateTar() {
+      const action = document.getElementById('tar-action').value;
+      const format = document.getElementById('tar-format').value;
+      const name = document.getElementById('tar-name').value.trim() || 'backup.tar.gz';
+      const source = document.getElementById('tar-source').value.trim() || '/var/www/html';
+      const sourceGroup = document.getElementById('tar-source-group');
+
+      let flags = '-';
+      let explain = 'Flags: ';
+
+      if (action === 'compress') {
+        sourceGroup.style.display = 'flex';
+        flags += 'c';
+        explain += '<strong>-c</strong> (create archive) ';
+        if (format === 'gz') {
+          flags += 'z';
+          explain += '• <strong>-z</strong> (gzip compression) ';
+        } else if (format === 'bz2') {
+          flags += 'j';
+          explain += '• <strong>-j</strong> (bzip2 compression) ';
+        }
+        flags += 'vf';
+        explain += '• <strong>-v</strong> (verbose progress) • <strong>-f</strong> (filename)';
+        
+        document.getElementById('tar-command').textContent = `tar ${flags} ${name} ${source}`;
+      } else if (action === 'extract') {
+        sourceGroup.style.display = 'none';
+        flags += 'x';
+        explain += '<strong>-x</strong> (extract files) ';
+        if (format === 'gz') {
+          flags += 'z';
+          explain += '• <strong>-z</strong> (decompress gzip) ';
+        } else if (format === 'bz2') {
+          flags += 'j';
+          explain += '• <strong>-j</strong> (decompress bzip2) ';
+        }
+        flags += 'vf';
+        explain += '• <strong>-v</strong> (verbose) • <strong>-f</strong> (filename)';
+        
+        document.getElementById('tar-command').textContent = `tar ${flags} ${name}`;
+      } else {
+        sourceGroup.style.display = 'none';
+        flags += 't';
+        explain += '<strong>-t</strong> (list contents) ';
+        if (format === 'gz') {
+          flags += 'z';
+          explain += '• <strong>-z</strong> (gzip) ';
+        } else if (format === 'bz2') {
+          flags += 'j';
+          explain += '• <strong>-j</strong> (bzip2) ';
+        }
+        flags += 'f';
+        explain += '• <strong>-f</strong> (filename)';
+        
+        document.getElementById('tar-command').textContent = `tar ${flags} ${name}`;
+      }
+
+      document.getElementById('tar-info').innerHTML = explain;
+    }
+
+    // Auto-update filename extension based on format selector
+    document.getElementById('tar-format').addEventListener('change', (e) => {
+      const fmt = e.target.value;
+      let nameVal = document.getElementById('tar-name').value;
+      nameVal = nameVal.replace(/\.tar\.(gz|bz2)$/, '').replace(/\.tar$/, '');
+      if (fmt === 'gz') {
+        document.getElementById('tar-name').value = nameVal + '.tar.gz';
+      } else if (fmt === 'bz2') {
+        document.getElementById('tar-name').value = nameVal + '.tar.bz2';
+      } else {
+        document.getElementById('tar-name').value = nameVal + '.tar';
+      }
+      updateTar();
+    });
+
+    tarFields.forEach(id => {
+      document.getElementById(id).addEventListener('input', updateTar);
+      document.getElementById(id).addEventListener('change', updateTar);
+    });
+
+    // ─── Setup Copy Actions for Generators ───
+    function setupCopy(btnId, commandSpanId) {
+      const btn = document.getElementById(btnId);
+      const span = document.getElementById(commandSpanId);
+      if (btn && span) {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(span.textContent)
+            .then(() => {
+              btn.classList.add('copied');
+              const spanText = btn.querySelector('span');
+              spanText.textContent = 'Copied!';
+              setTimeout(() => {
+                btn.classList.remove('copied');
+                spanText.textContent = 'Copy';
+              }, 2000);
+            })
+            .catch(err => console.error('Failed to copy text: ', err));
+        });
+      }
+    }
+
+    setupCopy('chmod-copy', 'chmod-command');
+    setupCopy('cron-copy', 'cron-command');
+    setupCopy('tar-copy', 'tar-command');
+
+    // Run updates on initial load
+    updateChmod();
+    updateCrontab();
+    updateTar();
+  </script>
+</body>
+</html>
