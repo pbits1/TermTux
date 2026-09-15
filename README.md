@@ -8,11 +8,13 @@ Visit the live site: **[https://termtux.pages.dev](https://termtux.pages.dev)**
 
 ## ⚡ Core Features
 
-- **1,000+ Commands** organized systematically across **77 Categories** and **6 Parent Sections** (from basics to Docker, systemd, SSH, and troubleshooting).
+- **1,050+ Commands** organized systematically across **78 Categories** and **6 Parent Sections** (from basics to Docker, systemd, SSH, hardware stress testing, and troubleshooting).
 - **Interactive Developer Tools:**
   - **chmod Calculator:** Visually toggle file permissions to dynamically compute octal codes (`755`, `600`), symbolic flags (`rwxr-xr-x`), and copy ready-to-run commands.
   - **Crontab Schedule Builder:** Slide selectors to construct cron expressions with real-time natural English translations (e.g. `"Runs: At 02:00 AM, only on Sunday"`).
   - **tar Archiver Builder:** Visually build compress, extract, and file-listing commands with detailed breakdowns of cryptic flag arguments (`-czvf` vs `-xzvf`).
+  - **Systemd Service Unit Generator:** Generate robust systemd `.service` files with restart policies, execution privileges, and dependencies.
+  - **SSH Client Config Builder:** Construct clean `~/.ssh/config` connection aliases with custom keys, ports, and keepalive intervals.
 - **Fuzzy Search Engine:** Tap `Ctrl + K` (or `Cmd + K`) from anywhere to search commands, descriptions, or tags instantly. Press `Escape` to close and clear.
 - **Progressive Web App (PWA):** Installs directly as a standalone app on your Desktop or Mobile home screen with complete **offline functionality** powered by Service Worker caching.
 - **Visual Excellence:** High-contrast Dark and Light modes featuring smooth micro-animations, vestibular motion controls (`prefers-reduced-motion`), and responsive design for mobile, tablet, and widescreen layouts.

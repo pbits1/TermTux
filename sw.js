@@ -1,4 +1,4 @@
-const CACHE_NAME = 'termtux-cache-v8';
+const CACHE_NAME = 'termtux-cache-v9';
 const PRECACHE_ASSETS = [
   './',
   './index.html',

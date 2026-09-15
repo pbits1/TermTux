@@ -160,23 +160,25 @@ export function renderMarkdown(markdown) {
   return content;
 }
 
-window.copyToClipboard = function(btn) {
-  const code = btn.closest('.command-block').querySelector('pre code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    const span = btn.querySelector('span');
-    const originalText = span.innerText;
-    span.innerText = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      span.innerText = originalText;
-      btn.classList.remove('copied');
-    }, 2000);
-  }).catch(err => {
-    console.error('Failed to copy text: ', err);
-    const span = btn.querySelector('span');
-    span.innerText = 'Failed';
-    setTimeout(() => {
-      span.innerText = 'Copy';
-    }, 2000);
-  });
-};
+if (typeof window !== 'undefined') {
+  window.copyToClipboard = function(btn) {
+    const code = btn.closest('.command-block').querySelector('pre code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const span = btn.querySelector('span');
+      const originalText = span.innerText;
+      span.innerText = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        span.innerText = originalText;
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+      const span = btn.querySelector('span');
+      span.innerText = 'Failed';
+      setTimeout(() => {
+        span.innerText = 'Copy';
+      }, 2000);
+    });
+  };
+}

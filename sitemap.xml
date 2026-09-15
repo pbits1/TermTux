@@ -121,6 +121,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://termtux.pages.dev/category.html#78</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://termtux.pages.dev/category.html#14</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

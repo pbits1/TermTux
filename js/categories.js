@@ -33,7 +33,8 @@ const sections = [
       { id: 69, file: "69-kernel-modules.md", title: "Kernel & Modules", description: "Manage Linux kernel modules, view hardware drivers, and configure kernel parameters at runtime.", tags: ["kernel", "modules", "lsmod", "modprobe", "sysctl"] },
       { id: 71, file: "71-swap-management.md", title: "Swap Management", description: "Create, resize, monitor, and tune swap space on Linux for better memory management.", tags: ["swap", "memory", "swapfile", "swapon", "swapoff"] },
       { id: 73, file: "73-system-recovery.md", title: "System Recovery & Live USB", description: "Recover a broken system — GRUB, recovery mode, chroot, and repair without reinstalling.", tags: ["recovery", "grub", "chroot", "live-usb", "repair", "boot"] },
-      { id: 77, file: "77-audio-linux.md", title: "Audio on Linux", description: "Manage audio, troubleshoot sound, and control PulseAudio and ALSA from the terminal.", tags: ["audio", "pulseaudio", "alsa", "aplay", "pactl", "sound"] }
+      { id: 77, file: "77-audio-linux.md", title: "Audio on Linux", description: "Manage audio, troubleshoot sound, and control PulseAudio and ALSA from the terminal.", tags: ["audio", "pulseaudio", "alsa", "aplay", "pactl", "sound"] },
+      { id: 78, file: "78-hardware-stress-testing.md", title: "Hardware Stress Testing", description: "Benchmark and stress test CPU, GPU, RAM, cache, and thermals with stress-ng and glmark2.", tags: ["stress", "benchmark", "stress-ng", "glmark2", "cpu", "gpu", "ram", "thermals", "burn-in", "hardware"] }
     ]
   },
   {

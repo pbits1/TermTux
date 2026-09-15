@@ -432,6 +432,158 @@
             </div>
           </div>
 
+          <!-- Systemd Service Unit Generator -->
+          <div class="tool-card">
+            <div class="tool-header-block">
+              <div class="tool-icon">⚙️</div>
+              <div>
+                <h2 class="tool-title">Systemd Service Generator</h2>
+                <p class="tool-desc">Generate robust, production-grade systemd .service unit files with auto-restart and permissions.</p>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: var(--space-md)">
+              <div class="form-group">
+                <label for="systemd-name">Service File Name</label>
+                <input type="text" id="systemd-name" class="form-input" value="myapp.service">
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label for="systemd-desc">Description</label>
+                <input type="text" id="systemd-desc" class="form-input" value="My Application Background Service">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="systemd-user">Run As User</label>
+                <input type="text" id="systemd-user" class="form-input" value="bholu">
+              </div>
+              <div class="form-group">
+                <label for="systemd-restart">Restart Policy</label>
+                <select id="systemd-restart" class="form-select">
+                  <option value="always">always (auto-heal crashes)</option>
+                  <option value="on-failure">on-failure (restart on error)</option>
+                  <option value="no">no (run once / manual)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="systemd-sec">Restart Delay</label>
+                <input type="text" id="systemd-sec" class="form-input" value="5s">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="systemd-dir">Working Directory</label>
+              <input type="text" id="systemd-dir" class="form-input" value="/home/bholu/myapp">
+            </div>
+
+            <div class="form-group">
+              <label for="systemd-exec">ExecStart (Execution Command)</label>
+              <input type="text" id="systemd-exec" class="form-input" value="/usr/bin/node /home/bholu/myapp/server.js">
+            </div>
+
+            <div class="form-group">
+              <label for="systemd-after">Start After Dependencies</label>
+              <select id="systemd-after" class="form-select">
+                <option value="network.target">network.target (standard)</option>
+                <option value="network-online.target">network-online.target (requires full internet)</option>
+                <option value="docker.service">docker.service (requires Docker)</option>
+              </select>
+            </div>
+
+            <div class="output-box">
+              <div class="output-label">Generated /etc/systemd/system/ Unit File</div>
+              <div class="output-info" id="systemd-info">
+                Installs to <code>/etc/systemd/system/<span id="systemd-file-preview">myapp.service</span></code>
+              </div>
+              <div class="command-block">
+                <div class="command-block-header">
+                  <div class="command-block-dots">
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                  </div>
+                  <button class="copy-btn" id="systemd-copy" aria-label="Copy unit file">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span id="systemd-command"></span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- SSH Client Config Builder -->
+          <div class="tool-card">
+            <div class="tool-header-block">
+              <div class="tool-icon">🔑</div>
+              <div>
+                <h2 class="tool-title">SSH Client Config Builder</h2>
+                <p class="tool-desc">Create ~/.ssh/config shortcuts to connect to remote servers with simple nicknames.</p>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: var(--space-md)">
+              <div class="form-group">
+                <label for="ssh-alias">Host Nickname (Alias)</label>
+                <input type="text" id="ssh-alias" class="form-input" value="prod-vps">
+              </div>
+              <div class="form-group" style="grid-column: span 2">
+                <label for="ssh-host">HostName (IP or Domain)</label>
+                <input type="text" id="ssh-host" class="form-input" value="192.168.1.100">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ssh-user">Remote Username</label>
+                <input type="text" id="ssh-user" class="form-input" value="ubuntu">
+              </div>
+              <div class="form-group">
+                <label for="ssh-port">SSH Port</label>
+                <input type="text" id="ssh-port" class="form-input" value="22">
+              </div>
+              <div class="form-group">
+                <label for="ssh-keepalive">KeepAlive (sec)</label>
+                <input type="text" id="ssh-keepalive" class="form-input" value="60">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="ssh-key">Private Key Path (IdentityFile)</label>
+              <input type="text" id="ssh-key" class="form-input" value="~/.ssh/id_ed25519">
+            </div>
+
+            <div class="form-group">
+              <label for="ssh-forward">Forward SSH Agent</label>
+              <select id="ssh-forward" class="form-select">
+                <option value="no">no (secure default)</option>
+                <option value="yes">yes (allow key forwarding)</option>
+              </select>
+            </div>
+
+            <div class="output-box">
+              <div class="output-label">Append to ~/.ssh/config &amp; Connect Command</div>
+              <div class="output-info" id="ssh-info">
+                Connect via: <code>ssh prod-vps</code>
+              </div>
+              <div class="command-block">
+                <div class="command-block-header">
+                  <div class="command-block-dots">
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                    <span class="command-block-dot"></span>
+                  </div>
+                  <button class="copy-btn" id="ssh-copy" aria-label="Copy config">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre><code><span id="ssh-command"></span></code></pre>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       
@@ -665,6 +817,82 @@
       document.getElementById(id).addEventListener('change', updateTar);
     });
 
+    // ─── Systemd Service Unit Generator Logic ───
+    const systemdFields = ['systemd-name', 'systemd-desc', 'systemd-user', 'systemd-restart', 'systemd-sec', 'systemd-dir', 'systemd-exec', 'systemd-after'];
+
+    function updateSystemd() {
+      let name = document.getElementById('systemd-name').value.trim() || 'myapp.service';
+      if (!name.endsWith('.service')) name += '.service';
+      const desc = document.getElementById('systemd-desc').value.trim() || 'My Application Background Service';
+      const user = document.getElementById('systemd-user').value.trim() || 'user';
+      const restart = document.getElementById('systemd-restart').value;
+      const sec = document.getElementById('systemd-sec').value.trim() || '5s';
+      const dir = document.getElementById('systemd-dir').value.trim() || '/home/user/myapp';
+      const exec = document.getElementById('systemd-exec').value.trim() || '/usr/bin/node /home/user/myapp/server.js';
+      const after = document.getElementById('systemd-after').value;
+
+      document.getElementById('systemd-file-preview').textContent = name;
+      
+      const unitContent = `[Unit]
+Description=${desc}
+After=${after}
+
+[Service]
+Type=simple
+User=${user}
+WorkingDirectory=${dir}
+ExecStart=${exec}
+Restart=${restart}
+RestartSec=${sec}
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target`;
+
+      document.getElementById('systemd-command').textContent = unitContent;
+    }
+
+    systemdFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateSystemd);
+        el.addEventListener('change', updateSystemd);
+      }
+    });
+
+    // ─── SSH Client Config Builder Logic ───
+    const sshFields = ['ssh-alias', 'ssh-host', 'ssh-user', 'ssh-port', 'ssh-keepalive', 'ssh-key', 'ssh-forward'];
+
+    function updateSsh() {
+      const alias = document.getElementById('ssh-alias').value.trim() || 'my-server';
+      const host = document.getElementById('ssh-host').value.trim() || '192.168.1.100';
+      const user = document.getElementById('ssh-user').value.trim() || 'ubuntu';
+      const port = document.getElementById('ssh-port').value.trim() || '22';
+      const keepalive = document.getElementById('ssh-keepalive').value.trim() || '60';
+      const key = document.getElementById('ssh-key').value.trim() || '~/.ssh/id_ed25519';
+      const forward = document.getElementById('ssh-forward').value;
+
+      document.getElementById('ssh-info').innerHTML = `Connect via: <code>ssh ${alias}</code>`;
+
+      const configContent = `Host ${alias}
+    HostName ${host}
+    User ${user}
+    Port ${port}
+    IdentityFile ${key}
+    ServerAliveInterval ${keepalive}
+    ForwardAgent ${forward}`;
+
+      document.getElementById('ssh-command').textContent = configContent;
+    }
+
+    sshFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateSsh);
+        el.addEventListener('change', updateSsh);
+      }
+    });
+
     // ─── Setup Copy Actions for Generators ───
     function setupCopy(btnId, commandSpanId) {
       const btn = document.getElementById(btnId);
@@ -689,11 +917,15 @@
     setupCopy('chmod-copy', 'chmod-command');
     setupCopy('cron-copy', 'cron-command');
     setupCopy('tar-copy', 'tar-command');
+    setupCopy('systemd-copy', 'systemd-command');
+    setupCopy('ssh-copy', 'ssh-command');
 
     // Run updates on initial load
     updateChmod();
     updateCrontab();
     updateTar();
+    updateSystemd();
+    updateSsh();
   </script>
 </body>
 </html>
