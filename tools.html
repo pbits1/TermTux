@@ -5,8 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TermTux — Interactive Linux Command Generators</title>
   <meta name="description" content="Generate complex Linux terminal commands interactively. chmod calculator, crontab schedule builder, and tar archiver helper.">
+  <meta name="theme-color" content="#E95420">
+  <link rel="canonical" href="https://termtux.pages.dev/tools.html">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta property="og:title" content="TermTux — Interactive Linux Command Generators">
+  <meta property="og:description" content="chmod calculator, crontab builder, tar helper, systemd and SSH config generators.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://termtux.pages.dev/tools.html">
+  <meta property="og:image" content="https://termtux.pages.dev/icon-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TermTux — Interactive Linux Tools">
+  <meta name="twitter:description" content="Generate chmod, cron, tar, systemd and SSH configs without memorizing flags.">
+  <meta name="twitter:image" content="https://termtux.pages.dev/icon-512.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23E95420'/><text x='50' y='68' font-size='50' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>T</text></svg>" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/yaru-tokens.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
@@ -237,30 +254,30 @@
             </div>
 
             <div class="form-row" style="margin-top: var(--space-md)">
-              <div class="form-group">
-                <label>Owner (User)</label>
-                <div class="checkbox-group">
+              <fieldset class="form-group tool-fieldset">
+                <legend class="form-legend">Owner (User)</legend>
+                <div class="checkbox-group" style="border:none;background:none;padding:0;">
                   <label class="checkbox-label"><input type="checkbox" id="chmod-ur" checked> Read (r - 4)</label>
                   <label class="checkbox-label"><input type="checkbox" id="chmod-uw" checked> Write (w - 2)</label>
                   <label class="checkbox-label"><input type="checkbox" id="chmod-ux" checked> Execute (x - 1)</label>
                 </div>
-              </div>
-              <div class="form-group">
-                <label>Group</label>
-                <div class="checkbox-group">
+              </fieldset>
+              <fieldset class="form-group tool-fieldset">
+                <legend class="form-legend">Group</legend>
+                <div class="checkbox-group" style="border:none;background:none;padding:0;">
                   <label class="checkbox-label"><input type="checkbox" id="chmod-gr" checked> Read (r - 4)</label>
                   <label class="checkbox-label"><input type="checkbox" id="chmod-gw"> Write (w - 2)</label>
                   <label class="checkbox-label"><input type="checkbox" id="chmod-gx" checked> Execute (x - 1)</label>
                 </div>
-              </div>
-              <div class="form-group">
-                <label>Public (Others)</label>
-                <div class="checkbox-group">
+              </fieldset>
+              <fieldset class="form-group tool-fieldset">
+                <legend class="form-legend">Public (Others)</legend>
+                <div class="checkbox-group" style="border:none;background:none;padding:0;">
                   <label class="checkbox-label"><input type="checkbox" id="chmod-or" checked> Read (r - 4)</label>
                   <label class="checkbox-label"><input type="checkbox" id="chmod-ow"> Write (w - 2)</label>
                   <label class="checkbox-label"><input type="checkbox" id="chmod-ox" checked> Execute (x - 1)</label>
                 </div>
-              </div>
+              </fieldset>
             </div>
 
             <div class="form-row">
@@ -282,7 +299,7 @@
                     <span class="command-block-dot"></span>
                     <span class="command-block-dot"></span>
                   </div>
-                  <button class="copy-btn" id="chmod-copy" aria-label="Copy command">
+                  <button class="copy-btn" data-tool-copy id="chmod-copy" aria-label="Copy command">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                     <span>Copy</span>
                   </button>
@@ -362,7 +379,7 @@
                     <span class="command-block-dot"></span>
                     <span class="command-block-dot"></span>
                   </div>
-                  <button class="copy-btn" id="cron-copy" aria-label="Copy command">
+                  <button class="copy-btn" data-tool-copy id="cron-copy" aria-label="Copy command">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                     <span>Copy</span>
                   </button>
@@ -422,7 +439,7 @@
                     <span class="command-block-dot"></span>
                     <span class="command-block-dot"></span>
                   </div>
-                  <button class="copy-btn" id="tar-copy" aria-label="Copy command">
+                  <button class="copy-btn" data-tool-copy id="tar-copy" aria-label="Copy command">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                     <span>Copy</span>
                   </button>
@@ -503,7 +520,7 @@
                     <span class="command-block-dot"></span>
                     <span class="command-block-dot"></span>
                   </div>
-                  <button class="copy-btn" id="systemd-copy" aria-label="Copy unit file">
+                  <button class="copy-btn" data-tool-copy id="systemd-copy" aria-label="Copy unit file">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                     <span>Copy</span>
                   </button>
@@ -574,7 +591,7 @@
                     <span class="command-block-dot"></span>
                     <span class="command-block-dot"></span>
                   </div>
-                  <button class="copy-btn" id="ssh-copy" aria-label="Copy config">
+                  <button class="copy-btn" data-tool-copy id="ssh-copy" aria-label="Copy config">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                     <span>Copy</span>
                   </button>
@@ -893,13 +910,35 @@ WantedBy=multi-user.target`;
       }
     });
 
-    // ─── Setup Copy Actions for Generators ───
+    // ─── Setup Copy Actions for Generators (clipboard + execCommand fallback) ───
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext !== false) {
+        return navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+      }
+      return Promise.resolve(fallbackCopy(text));
+    }
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      try {
+        if (!document.execCommand('copy')) throw new Error('copy failed');
+      } finally {
+        document.body.removeChild(ta);
+      }
+    }
     function setupCopy(btnId, commandSpanId) {
       const btn = document.getElementById(btnId);
       const span = document.getElementById(commandSpanId);
       if (btn && span) {
         btn.addEventListener('click', () => {
-          navigator.clipboard.writeText(span.textContent)
+          copyText(span.textContent)
             .then(() => {
               btn.classList.add('copied');
               const spanText = btn.querySelector('span');
@@ -909,7 +948,12 @@ WantedBy=multi-user.target`;
                 spanText.textContent = 'Copy';
               }, 2000);
             })
-            .catch(err => console.error('Failed to copy text: ', err));
+            .catch(err => {
+              console.error('Failed to copy text: ', err);
+              const spanText = btn.querySelector('span');
+              spanText.textContent = 'Failed';
+              setTimeout(() => { spanText.textContent = 'Copy'; }, 2000);
+            });
         });
       }
     }

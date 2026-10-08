@@ -8,16 +8,40 @@
   <meta name="keywords" content="linux, commands, terminal, bash, reference, guide, cheatsheet">
   <meta name="author" content="pbits1">
   <meta name="theme-color" content="#E95420">
+  <link rel="canonical" href="https://termtux.pages.dev/index.html">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'">
   
   <!-- Open Graph -->
   <meta property="og:title" content="TermTux — Linux Commands Reference">
   <meta property="og:description" content="1,000+ Linux commands organized across 78 categories. Searchable, copyable, beautiful.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://termtux.pages.dev">
+  <meta property="og:image" content="https://termtux.pages.dev/icon-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="TermTux logo — orange circle with T">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TermTux — Linux Commands Reference">
+  <meta name="twitter:description" content="1,050+ Linux commands across 78 categories. Searchable, copyable, offline-ready.">
+  <meta name="twitter:image" content="https://termtux.pages.dev/icon-512.png">
   
   <!-- Favicon (Ubuntu orange circle) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23E95420'/><text x='50' y='68' font-size='50' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>T</text></svg>" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
+
+  <!-- Fonts: preconnect + non-blocking (replaces CSS @import) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"TermTux","url":"https://termtux.pages.dev/","description":"Searchable Linux commands reference with 1,050+ commands across 78 categories.","potentialAction":{"@type":"SearchAction","target":"https://termtux.pages.dev/category.html?cat={query}","query-input":"required name=query"}}
+  </script>
   
   <link rel="stylesheet" href="css/yaru-tokens.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -128,23 +152,31 @@
 
   <script type="module">
     import { sections } from './js/categories.js';
-    
-    // Render home sections
+
+    // Render home sections with visible topic links (no more first-topic-only cards)
     const homeSections = document.getElementById('homeSections');
     let html = '';
-    
+
+    const esc = (s) => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
     sections.forEach((section, idx) => {
-      const firstCatId = section.categories[0].id;
+      const visible = section.categories.slice(0, 5);
+      const remaining = section.categories.length - visible.length;
+      const topics = visible.map(c => `<li><a class="section-topic-link" href="category.html#${c.id}"><span aria-hidden="true">›</span> ${esc(c.title)}</a></li>`).join('');
       html += `
-        <a href="category.html#${firstCatId}" class="section-card fade-in-up stagger-${idx+1}">
+        <div class="section-card fade-in-up stagger-${idx+1}">
           <div class="section-card-icon" aria-hidden="true">${section.icon}</div>
-          <h2>${section.title}</h2>
-          <p>${section.description}</p>
+          <h2>${esc(section.title)}</h2>
+          <p>${esc(section.description)}</p>
           <div class="card-count">${section.categories.length} Topics</div>
-        </a>
+          <ul class="section-topics" aria-label="${esc(section.title)} topics">
+            ${topics}
+            ${remaining > 0 ? `<li class="section-topics-more">+ ${remaining} more in sidebar →</li>` : ''}
+          </ul>
+        </div>
       `;
     });
-    
+
     homeSections.innerHTML = html;
   </script>
   <script type="module" src="js/app.js"></script>

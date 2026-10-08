@@ -4,6 +4,17 @@
    ============================================================ */
 
 /* ─── Section Cards (Home page) ─── */
+div.section-card {
+  cursor: default;
+}
+div.section-card:hover {
+  transform: none;
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-color);
+}
+div.section-card:hover::before {
+  opacity: 0;
+}
 .section-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -300,8 +311,14 @@
   border-bottom: none;
 }
 
-.search-result-item:hover {
+.search-result-item:hover,
+.search-result-item.active {
   background: var(--bg-hover);
+  outline: none;
+}
+
+.search-result-item.active {
+  border-left: 3px solid var(--yaru-orange);
 }
 
 .search-result-title {
@@ -386,6 +403,21 @@
 .command-block-dots {
   display: flex;
   gap: 6px;
+  align-items: center;
+}
+
+.code-lang {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--code-comment);
+  background: var(--code-copy-bg);
+  border: 1px solid var(--code-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  margin-left: var(--space-sm);
+  margin-right: auto;
 }
 
 .command-block-dot {
@@ -825,4 +857,71 @@
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* ─── Home section topic lists (fixes first-topic-only cards) ─── */
+.section-topics {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--space-sm);
+}
+
+.section-topics li {
+  margin: 0;
+}
+
+.section-topic-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.section-topic-link:hover {
+  background: var(--bg-hover);
+  color: var(--yaru-orange);
+}
+
+.section-topics-more {
+  font-size: var(--font-size-xs);
+  color: var(--yaru-orange);
+  font-weight: var(--font-weight-medium);
+  padding: 4px 6px;
+}
+
+/* ─── Ordered lists from markdown ─── */
+.content-body ol {
+  list-style: decimal;
+}
+
+/* ─── Accessible form groups (tools page) ─── */
+.tool-fieldset {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  padding: var(--space-md);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tool-fieldset > legend,
+.form-legend {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 6px;
 }
