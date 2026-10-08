@@ -7,6 +7,7 @@
    Keeping system fallbacks here so first paint never blocks on fonts. --- */
 
 :root {
+  color-scheme: light;
   /* ─── Primary Colors ─── */
   --yaru-orange:          #E95420;
   --yaru-orange-light:    #F47B52;
@@ -131,6 +132,7 @@
 
 /* ─── Dark Theme ─── */
 [data-theme="dark"] {
+  color-scheme: dark;
   --bg-primary:           #1A1A2E;
   --bg-secondary:         #16213E;
   --bg-tertiary:          #1E1E32;

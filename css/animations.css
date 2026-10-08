@@ -42,52 +42,8 @@
 .stagger-9 { animation-delay: 450ms; }
 .stagger-10 { animation-delay: 500ms; }
 
-/* ─── Micro-animations ─── */
-.hover-lift {
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-/* Icon pulse effect on hover */
-.icon-pulse:hover {
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-/* Loading Spinner */
-.spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid var(--border-color);
-  border-top-color: var(--yaru-orange);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ─── Content Transitions ─── */
-.content-transition-enter {
-  opacity: 0;
-  transform: translateX(10px);
-}
-
-.content-transition-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-}
+/* NOTE: .hover-lift, .icon-pulse, .spinner and .content-transition-* were removed
+   (dead code — no references in HTML/JS). Skeleton shimmer lives in components.css. */
 
 @media (prefers-reduced-motion: reduce) {
   * {

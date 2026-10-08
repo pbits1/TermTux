@@ -135,8 +135,11 @@ function renderSidebar() {
   if (!sidebarNav) return;
 
   const activeId = getCategoryId();
-  const onHome = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.');
-  const onTools = window.location.pathname.endsWith('tools.html');
+  // Note: production 308-redirects .html → extensionless (/tools, /category),
+  // so never treat "no dot in pathname" as home — that misfires on /tools & /category.
+  const path = window.location.pathname;
+  const onHome = path === '' || path.endsWith('/') || path.endsWith('index.html');
+  const onTools = path.endsWith('tools.html') || path === '/tools' || path.endsWith('/tools');
 
   let html = `
     <a href="index.html" class="nav-item ${onHome ? 'active' : ''}">
@@ -709,25 +712,48 @@ function highlight(text, query) {
   return safeText.replace(regex, '<span class="search-result-highlight">$1</span>');
 }
 
-function setTheme(theme) {
+function setTheme(theme, persist = true) {
   document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
+  if (persist) {
+    try { localStorage.setItem('theme', theme); } catch (e) { /* private mode */ }
+  }
+  // Keep toggle semantics + browser chrome in sync (instant, no transition needed)
+  if (themeToggle) {
+    const isDark = theme === 'dark';
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+    themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#1A1A2E' : '#E95420');
 }
 
 function loadTheme() {
-  const saved = localStorage.getItem('theme');
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) { /* private mode */ }
   if (saved) {
     setTheme(saved);
   } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    setTheme('dark');
+    // Follow the OS but don't persist: user hasn't chosen yet, so OS changes keep working
+    setTheme('dark', false);
+  } else {
+    syncThemeToggle();
   }
+}
+
+function syncThemeToggle() {
+  if (!themeToggle) return;
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  themeToggle.setAttribute('aria-pressed', String(isDark));
+  themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
 // System theme listener
 if (window.matchMedia) {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!localStorage.getItem('theme')) {
-      setTheme(e.matches ? 'dark' : 'light');
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (err) { /* private mode */ }
+    if (!saved) {
+      setTheme(e.matches ? 'dark' : 'light', false);
     }
   });
 }

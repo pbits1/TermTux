@@ -1,4 +1,4 @@
-const CACHE_NAME = 'termtux-cache-v10';
+const CACHE_NAME = 'termtux-cache-v11';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -138,19 +138,23 @@ self.addEventListener('fetch', (e) => {
 
   const url = new URL(e.request.url);
 
+  // Extensionless URLs exist in production (/category, /tools via 308 from .html)
+  const isCategoryPage = url.pathname.includes('category.html') || url.pathname.endsWith('/category');
+  const isToolsPage = url.pathname.includes('tools.html') || url.pathname.endsWith('/tools');
+
   // Check if it is a page request or a content file request
   // Note: ?cat= query form is SEO-indexable; strip search for matching.
   const isHtmlOrContent =
     url.pathname === '/' ||
     url.pathname.endsWith('/') ||
     url.pathname.includes('index.html') ||
-    url.pathname.includes('category.html') ||
-    url.pathname.includes('tools.html') ||
+    isCategoryPage ||
+    isToolsPage ||
     url.pathname.includes('content/');
 
   if (isHtmlOrContent) {
     // Network-First strategy (ignore query for cache key on category pages)
-    const cacheKey = url.pathname.includes('category.html') && url.search
+    const cacheKey = isCategoryPage && url.search
       ? new Request(url.pathname, { headers: e.request.headers })
       : e.request;
     e.respondWith(
@@ -172,7 +176,7 @@ self.addEventListener('fetch', (e) => {
             if (cachedResponse) return cachedResponse;
             if (cacheKey !== e.request) return caches.match(cacheKey);
             // Fallbacks
-            if (url.pathname.includes('category.html')) {
+            if (isCategoryPage) {
               return caches.match('./category.html');
             }
             return caches.match('./index.html') || caches.match('./404.html');
