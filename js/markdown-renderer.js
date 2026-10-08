@@ -134,10 +134,23 @@ export function renderMarkdown(markdown) {
   });
 
   // 5. Render markdown blocks (headers, blockquotes, lists, links, emphasis)
-  content = content.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
-  content = content.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-  content = content.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-  content = content.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+  // Headings get slug ids + hover anchors so every command is deep-linkable
+  const slugify = (s) => String(s || '')
+    .replace(/<[^>]+>/g, '')
+    .toLowerCase()
+    .replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+  const heading = (level, text) => {
+    const id = slugify(text);
+    return `<h${level} id="${id}">${text}<a class="heading-anchor" href="#${id}" aria-label="Link to this section">#</a></h${level}>`;
+  };
+  content = content.replace(/^#### (.*$)/gim, (m, t) => heading(4, t));
+  content = content.replace(/^### (.*$)/gim, (m, t) => heading(3, t));
+  content = content.replace(/^## (.*$)/gim, (m, t) => heading(2, t));
+  content = content.replace(/^# (.*$)/gim, (m, t) => heading(1, t));
 
   content = content.replace(/^&gt; (.*$)/gim, '<blockquote>$1</blockquote>');
   content = content.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');

@@ -47,6 +47,81 @@ function findCategory(id) {
   return { category: null, section: null };
 }
 
+function getSectionId() {
+  const hash = window.location.hash.substring(1);
+  if (hash.startsWith('section-')) {
+    const n = parseInt(hash.replace('section-', ''), 10);
+    if (n && !isNaN(n)) return n;
+  }
+  try {
+    const q = new URLSearchParams(window.location.search).get('section');
+    const n = parseInt(q, 10);
+    if (n && !isNaN(n)) return n;
+  } catch (e) { /* ignore */ }
+  return null;
+}
+
+function findSection(id) {
+  return sections.find(s => s.id === id) || null;
+}
+
+// Flat registry order for prev/next chapter flow
+function flatCategories() {
+  const out = [];
+  sections.forEach(s => s.categories.forEach(c => out.push({ cat: c, sec: s })));
+  return out;
+}
+
+function siblingChapters(id) {
+  const flat = flatCategories();
+  const i = flat.findIndex(e => e.cat.id === id);
+  if (i < 0) return { prev: null, next: null };
+  return { prev: flat[i - 1] || null, next: flat[i + 1] || null };
+}
+
+// Command-level entry index: parsed lazily from fetched markdown, cached
+const entryIndex = new Map(); // catId -> [{text, anchor}]
+let entrySearchCache = null;
+
+function slugifyText(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-');
+}
+
+async function getEntriesFor(cat) {
+  if (entryIndex.has(cat.id)) return entryIndex.get(cat.id);
+  try {
+    const res = await fetch(`content/${cat.file}`);
+    if (!res.ok) throw new Error('fetch failed');
+    const md = (await res.text()).replace(/^---\n[\s\S]*?\n---\n/, '');
+    const entries = [];
+    const seen = new Set();
+    for (const m of md.matchAll(/^#{1,4}\s+(.+)$/gm)) {
+      const raw = m[1].replace(/`([^`]+)`/g, '$1').trim();
+      if (!raw) continue;
+      const anchor = slugifyText(raw);
+      if (!anchor || seen.has(anchor)) continue;
+      seen.add(anchor);
+      entries.push({ text: raw.slice(0, 80), anchor });
+      if (entries.length >= 12) break;
+    }
+    entryIndex.set(cat.id, entries);
+    return entries;
+  } catch (e) {
+    entryIndex.set(cat.id, []);
+    return [];
+  }
+}
+
+async function buildEntrySearchCache() {
+  if (entrySearchCache) return entrySearchCache;
+  const jobs = [];
+  sections.forEach(s => s.categories.forEach(c => jobs.push(getEntriesFor(c).then(es => ({ c, s, es })))));
+  const settled = await Promise.all(jobs);
+  entrySearchCache = [];
+  settled.forEach(({ c, s, es }) => es.forEach(e => entrySearchCache.push({ c, s, entry: e })));
+  return entrySearchCache;
+}
+
 // Initialize
 function init() {
   renderSidebar();
@@ -135,11 +210,20 @@ function updateCategoryMeta(category) {
   setMeta('#canonicalLink', 'href', pageUrl);
 }
 
-// Handle Routing
+// Handle Routing (chapter pages + section landing pages)
 async function handleRouting() {
   if (!window.location.pathname.includes('category')) return;
 
+  const sectionId = getSectionId();
   const id = getCategoryId();
+
+  // Section landing: category.html?section=N lists every chapter in the section
+  if (!id && sectionId) {
+    renderSectionLanding(findSection(sectionId));
+    renderSidebar();
+    return;
+  }
+
   if (!id || isNaN(id)) {
     window.location.href = 'index.html';
     return;
@@ -149,6 +233,7 @@ async function handleRouting() {
 
   if (!category) {
     document.title = 'Not found — TermTux';
+    hideChapterChrome();
     if (mainContent) {
       mainContent.innerHTML = `
       <div class="empty-state">
@@ -162,13 +247,20 @@ async function handleRouting() {
     return;
   }
 
-  // Render breadcrumbs
+  // Render breadcrumbs (section links to its chapter index)
   const bSection = document.getElementById('breadcrumbSection');
   const bCategory = document.getElementById('breadcrumbCategory');
-  if (bSection) bSection.textContent = section.title;
+  if (bSection) {
+    bSection.innerHTML = '';
+    const a = document.createElement('a');
+    a.href = `category.html?section=${section.id}`;
+    a.textContent = section.title;
+    bSection.appendChild(a);
+  }
   if (bCategory) bCategory.textContent = category.title;
 
   updateCategoryMeta(category);
+  renderChapterNav(id, section);
 
   // Render tags
   const tagsContainer = document.getElementById('categoryTags');
@@ -194,7 +286,24 @@ async function handleRouting() {
     const response = await fetch(`content/${category.file}`);
     if (!response.ok) throw new Error('Network response was not ok');
     const md = await response.text();
-    if (mainContent) mainContent.innerHTML = renderMarkdown(md);
+    if (mainContent) {
+      mainContent.innerHTML = renderMarkdown(md);
+      buildOutline();
+      // Prime entry cache in background for command-level search
+      getEntriesFor(category);
+      // Deep-link scroll: entry click or #slug URL
+      let anchor = null;
+      try { anchor = sessionStorage.getItem('termtux-entry-anchor'); sessionStorage.removeItem('termtux-entry-anchor'); } catch (e) { /* ignore */ }
+      const frag = window.location.hash.substring(1);
+      if (!anchor && frag && isNaN(parseInt(frag, 10)) && !frag.startsWith('section-')) anchor = frag;
+      if (anchor) {
+        const target = document.getElementById(CSS.escape ? CSS.escape(anchor) : anchor) || mainContent.querySelector(`[id="${anchor}"]`);
+        if (target && target.scrollIntoView) {
+          const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        }
+      }
+    }
   } catch (error) {
     if (mainContent) {
       mainContent.innerHTML = `
@@ -206,6 +315,111 @@ async function handleRouting() {
     `;
     }
   }
+}
+
+function hideChapterChrome() {
+  ['chapterBar', 'chapterFooter', 'outlineBlock'].forEach(n => {
+    const el = document.getElementById(n);
+    if (el) el.hidden = true;
+  });
+}
+
+function renderSectionLanding(section) {
+  hideChapterChrome();
+  const bSection = document.getElementById('breadcrumbSection');
+  const bCategory = document.getElementById('breadcrumbCategory');
+  if (!section) {
+    document.title = 'Section not found — TermTux';
+    if (mainContent) {
+      mainContent.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon" aria-hidden="true">🔍</div>
+        <h3>Section not found</h3>
+        <p>The chapter index you are looking for does not exist.</p>
+        <a href="index.html" class="github-link mt-md" style="display: inline-flex;">Go home</a>
+      </div>`;
+    }
+    if (bSection) bSection.textContent = 'Sections';
+    if (bCategory) bCategory.textContent = 'Not found';
+    return;
+  }
+  document.title = `${section.title} — TermTux`;
+  if (bSection) bSection.textContent = 'Sections';
+  if (bCategory) bCategory.textContent = section.title;
+  const tagsContainer = document.getElementById('categoryTags');
+  if (tagsContainer) tagsContainer.style.display = 'none';
+  if (mainContent) {
+    const cards = section.categories.map(c => `
+      <a href="category.html#${c.id}" class="category-card">
+        <div class="category-card-icon" aria-hidden="true">›</div>
+        <div class="category-card-body">
+          <h3>${escapeHTML(c.title)}</h3>
+          <p>${escapeHTML(c.description || '')}</p>
+        </div>
+      </a>`).join('');
+    mainContent.innerHTML = `
+      <div class="category-header">
+        <h1>${escapeHTML(section.title)}</h1>
+        <p class="description">${escapeHTML(section.description || '')}</p>
+        <p style="color:var(--text-tertiary);font-size:var(--font-size-sm)">${section.categories.length} chapters — pick up where you left off.</p>
+      </div>
+      <div class="category-list-grid">${cards}</div>`;
+  }
+}
+
+function renderChapterNav(id, section) {
+  const { prev, next } = siblingChapters(id);
+  const bar = document.getElementById('chapterBar');
+  const footer = document.getElementById('chapterFooter');
+  const secLink = document.getElementById('chapterSection');
+  if (secLink) {
+    secLink.href = `category.html?section=${section.id}`;
+    secLink.textContent = section.title;
+  }
+  const setLink = (el, entry, fallback = 'index.html') => {
+    if (!el) return;
+    if (entry) {
+      el.href = `category.html#${entry.cat.id}`;
+      const t = el.querySelector('.chapter-footer-title');
+      if (t) t.textContent = entry.cat.title;
+      el.style.visibility = 'visible';
+      const label = el.id && el.id.includes('Prev') ? entry.cat.title : entry.cat.title;
+      el.setAttribute('aria-label', label);
+    } else {
+      el.href = fallback;
+      const t = el.querySelector('.chapter-footer-title');
+      if (t) t.textContent = 'Home Directory';
+    }
+  };
+  const prevBar = document.getElementById('chapterPrev');
+  const nextBar = document.getElementById('chapterNext');
+  if (prevBar) {
+    if (prev) { prevBar.href = `category.html#${prev.cat.id}`; prevBar.innerHTML = `‹ ${escapeHTML(prev.cat.title)}`; prevBar.style.visibility = 'visible'; }
+    else { prevBar.href = 'index.html'; prevBar.textContent = '‹ Home'; }
+  }
+  if (nextBar) {
+    if (next) { nextBar.href = `category.html#${next.cat.id}`; nextBar.innerHTML = `${escapeHTML(next.cat.title)} ›`; nextBar.style.visibility = 'visible'; }
+    else { nextBar.href = 'tools.html'; nextBar.textContent = 'Tools ›'; }
+  }
+  if (bar) bar.hidden = false;
+  if (footer) footer.hidden = false;
+  setLink(document.getElementById('chapterFooterPrev'), prev);
+  setLink(document.getElementById('chapterFooterNext'), next, 'tools.html');
+}
+
+// Build "On this page" outline from rendered h2/h3 ids
+function buildOutline() {
+  const block = document.getElementById('outlineBlock');
+  const list = document.getElementById('outlineList');
+  if (!block || !list || !mainContent) return;
+  const heads = mainContent.querySelectorAll('h2[id], h3[id]');
+  if (!heads.length) { block.hidden = true; return; }
+  list.innerHTML = Array.from(heads).slice(0, 20).map(h => {
+    const level = h.tagName.toLowerCase() === 'h3' ? ' — ' : '';
+    const text = (h.textContent || '').replace(/#$/, '').trim().slice(0, 70);
+    return `<li><a href="#${h.id}">${level}${escapeHTML(text)}</a></li>`;
+  }).join('');
+  block.hidden = false;
 }
 
 function escapeHTML(str) {
@@ -277,6 +491,46 @@ function runSearch(query) {
     searchInput.setAttribute('aria-expanded', 'true');
     searchInput.setAttribute('aria-activedescendant', '');
   }
+  enhanceWithEntries(q);
+}
+
+// Command-level pass: entries inside already-visited chapters + top matches
+async function enhanceWithEntries(q) {
+  if (!searchResults || !searchInput) return;
+  if (searchInput.value.trim().toLowerCase() !== q) return;
+  const topCats = searchMatches.slice(0, 5);
+  const jobs = [];
+  // already-cached chapters first (no network)
+  entryIndex.forEach((es, catId) => {
+    const found = findCategory(catId);
+    if (found.category) jobs.push(Promise.resolve({ c: found.category, s: found.section, es }));
+  });
+  topCats.forEach(m => {
+    if (!entryIndex.has(m.c.id)) jobs.push(getEntriesFor(m.c).then(es => ({ c: m.c, s: m.s, es })));
+  });
+  const groups = await Promise.all(jobs);
+  if (searchInput.value.trim().toLowerCase() !== q) return;
+  const entryHits = [];
+  const seen = new Set();
+  groups.forEach(({ c, s, es }) => {
+    (es || []).forEach(e => {
+      const key = `${c.id}#${e.anchor}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      const score = fuzzyScore(e.text, q);
+      if (score > 0) entryHits.push({ c, s, entry: e, score: score + 5 });
+    });
+  });
+  entryHits.sort((a, b) => b.score - a.score);
+  const top = entryHits.slice(0, 5);
+  if (!top.length) return;
+  const html = top.map((m, i) => `
+    <a href="category.html#${m.c.id}" data-entry-link="${m.entry.anchor}" class="search-result-item" role="option" id="search-entry-${i}" aria-selected="false">
+      <div class="search-result-title">${highlight(m.entry.text, q)}</div>
+      <div class="search-result-category">${escapeHTML(m.c.title)} • entry</div>
+    </a>`).join('');
+  searchResults.insertAdjacentHTML('beforeend', html);
+  searchMatches = searchMatches.concat(top.map(t => ({ c: t.c, s: t.s, entryAnchor: t.entry.anchor, score: t.score })));
 }
 
 function moveSearchSelection(delta) {
@@ -314,12 +568,36 @@ function setupEventListeners() {
     }
   });
 
-  // Hash change + query-param aware
+  // Entry deep-links: jump to heading after chapter loads
+  document.addEventListener('click', (e) => {
+    const entryLink = e.target.closest('[data-entry-link]');
+    if (entryLink) {
+      try { sessionStorage.setItem('termtux-entry-anchor', entryLink.getAttribute('data-entry-link')); } catch (err) { /* ignore */ }
+    }
+  });
+
+  // Hash change + query-param aware (ignore in-page entry anchors like #curl)
   window.addEventListener('hashchange', () => {
-    if (window.location.pathname.includes('category')) {
-      handleRouting();
-      renderSidebar();
-      closeSidebar();
+    if (!window.location.pathname.includes('category')) return;
+    const frag = window.location.hash.substring(1);
+    if (frag && isNaN(parseInt(frag, 10)) && !frag.startsWith('section-')) return;
+    handleRouting();
+    renderSidebar();
+    closeSidebar();
+  });
+
+  // Bottom nav (mobile book index)
+  document.addEventListener('click', (e) => {
+    const openIdx = e.target.closest('[data-open-index]');
+    if (openIdx) {
+      if (sidebar) sidebar.classList.add('open');
+      if (sidebarOverlay) sidebarOverlay.classList.add('active');
+      if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    }
+    const focusSearch = e.target.closest('[data-focus-search]');
+    if (focusSearch && searchInput) {
+      searchInput.focus();
+      searchInput.scrollIntoView({ block: 'nearest' });
     }
   });
 

@@ -124,6 +124,7 @@ input:focus-visible,
 /* ─── Main Content Area ─── */
 .main-content {
   flex: 1;
+  min-width: 0;
   margin-left: var(--sidebar-width);
   min-height: 100vh;
   transition: margin-left var(--transition-slow);
@@ -141,8 +142,13 @@ input:focus-visible,
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-color);
   z-index: 100;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+}
+
+@supports (backdrop-filter: blur(12px)) {
+  .top-bar {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 [data-theme="light"] .top-bar {
@@ -157,8 +163,8 @@ input:focus-visible,
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: transparent;
   color: var(--text-primary);
@@ -177,11 +183,23 @@ input:focus-visible,
   height: 22px;
 }
 
-/* ─── Content Sections ─── */
+/* ─── Content Sections (fluid book layout: left-aligned, full-bleed) ─── */
 .content-body {
-  padding: var(--content-padding);
-  max-width: calc(var(--max-content-width) + var(--content-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0;
+  padding-left: clamp(16px, 4vw, 56px);
+  padding-right: clamp(16px, 4vw, 56px);
+  padding-top: var(--content-padding);
+  padding-bottom: var(--content-padding);
+}
+
+/* Readable line length for prose only — headings/code/tables go full-bleed */
+.content-body p,
+.content-body ul:not(.section-topics):not(.outline-list),
+.content-body ol,
+.content-body blockquote {
+  max-width: 75ch;
 }
 
 .page-hero {
@@ -189,15 +207,26 @@ input:focus-visible,
   padding: var(--space-3xl) var(--space-xl);
 }
 
+/* Doc/tool pages read like book chapters: left-aligned hero */
+.page-hero--left {
+  text-align: left;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.page-hero--left p {
+  margin: 0;
+}
+
 .page-hero h1 {
-  font-size: var(--font-size-3xl);
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   margin-bottom: var(--space-md);
 }
 
 .page-hero p {
-  font-size: var(--font-size-lg);
+  font-size: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
@@ -277,10 +306,6 @@ input:focus-visible,
     display: flex;
   }
 
-  .page-hero h1 {
-    font-size: var(--font-size-2xl);
-  }
-
   .page-hero {
     padding: var(--space-2xl) var(--space-md);
   }
@@ -303,16 +328,67 @@ input:focus-visible,
     grid-template-columns: 1fr;
   }
 
-  .page-hero h1 {
-    font-size: var(--font-size-xl);
-  }
-
   .page-hero p {
     font-size: var(--font-size-base);
   }
 
   .top-bar {
     padding: 0 var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .content-body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ─── Print (reference-book output) ─── */
+@media print {
+  .sidebar,
+  .sidebar-overlay,
+  .top-bar,
+  .back-to-top,
+  .bottom-nav,
+  .chapter-bar,
+  .search-container,
+  .theme-toggle,
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-bottom: 0;
+  }
+
+  body,
+  .content-body,
+  .content-body p,
+  .content-body li,
+  .content-body td {
+    color: #000;
+    background: #fff;
+  }
+
+  .content-body {
+    max-width: none;
+  }
+
+  .command-block pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .command-block,
+  .table-wrapper,
+  .content-body h2 {
+    break-inside: avoid;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
   }
 }
 

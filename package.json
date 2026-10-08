@@ -1,0 +1,10 @@
+{
+  "name": "termtux",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TermTux — searchable Linux commands reference portal (static, zero-dependency)",
+  "scripts": {
+    "dev": "python3 -m http.server 8000"
+  }
+}
